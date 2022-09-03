@@ -470,14 +470,28 @@ class Configuration implements IConfiguration {
   visualModeKeyBindingsMap: Map<string, IKeyRemapping> = new Map();
   commandLineModeKeyBindingsMap: Map<string, IKeyRemapping> = new Map();
 
+  _textwidth = 80;
+
   get textwidth(): number {
-    const textwidth = this.getConfiguration('vim').get('textwidth', 80);
+    const textwidth = this.getConfiguration('vim').get('textwidth', this._textwidth);
 
     if (typeof textwidth !== 'number') {
-      return 80;
+      return this._textwidth;
     }
 
     return textwidth;
+  }
+
+  set textwidth(textwidth: number) {
+    // If in a workspace, update the workspace configuration. Otherwise update
+    // the global configuration.
+    if (vscode.workspace.name) {
+      this.getConfiguration('vim').update('textwidth', textwidth, undefined, true);
+    } else {
+      this.getConfiguration('vim').update('textwidth', textwidth, true, true);
+    }
+
+    this._textwidth = textwidth;
   }
 
   private static unproxify(obj: object): object {
