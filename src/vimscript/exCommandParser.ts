@@ -6,6 +6,7 @@ import { Breakpoints } from '../cmd_line/commands/breakpoints';
 import { BufferDeleteCommand } from '../cmd_line/commands/bufferDelete';
 import { CloseCommand } from '../cmd_line/commands/close';
 import { CopyCommand } from '../cmd_line/commands/copy';
+import { CursorCommand } from '../cmd_line/commands/cursor';
 import { MoveCommand } from '../cmd_line/commands/move';
 import { DeleteCommand } from '../cmd_line/commands/delete';
 import { DigraphsCommand } from '../cmd_line/commands/digraph';
@@ -179,6 +180,7 @@ export const builtinExCommands: ReadonlyArray<[[string, string], ArgParser | und
   [['cu', 'nmap'], undefined],
   [['cuna', 'bbrev'], undefined],
   [['cunme', 'nu'], undefined],
+  [['cur', 'sor'], CursorCommand.argParser],
   [['cw', 'indow'], succeed(new VsCodeCommand('workbench.panel.markers.view.focus'))],
   [['d', 'elete'], DeleteCommand.argParser],
   [['deb', 'ug'], undefined],

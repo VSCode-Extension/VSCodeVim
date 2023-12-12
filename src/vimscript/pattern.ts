@@ -72,9 +72,11 @@ export class Pattern {
     args:
       | {
           fromPosition: Position;
+          maxResults?: number;
         }
       | {
           lineRange: LineRange;
+          maxResults?: number;
         },
   ): PatternMatch[] {
     if (this.emptyBranch) {
@@ -157,6 +159,13 @@ export class Pattern {
           groups: match,
         });
 
+        if (
+          args.maxResults !== undefined &&
+          matchRanges.beforeWrapping.length + matchRanges.afterWrapping.length >= args.maxResults
+        ) {
+          break;
+        }
+
         if (Date.now() - start > Pattern.MAX_SEARCH_TIME) {
           break;
         }
@@ -191,6 +200,7 @@ export class Pattern {
     direction: SearchDirection;
     ignoreSmartcase?: boolean;
     delimiter?: string;
+    additionalParsers?: Array<Parser<string>>;
   }): Parser<Pattern> {
     const delimiter = args.delimiter
       ? args.delimiter
@@ -201,6 +211,7 @@ export class Pattern {
     return seqMap(
       string('|').result(true).fallback(false), // Leading | matches everything
       alt(
+        ...(args.additionalParsers ?? []),
         string('\\%V').map((_) => ({ inSelection: true })),
         string('$').map(() => '(?:$(?<!\\r))'), // prevents matching \r\n as two lines
         string('^').map(() => '(?:^(?<!\\r))'), // prevents matching \r\n as two lines
