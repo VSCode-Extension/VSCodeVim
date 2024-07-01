@@ -190,6 +190,7 @@ export interface IConfiguration {
   easymotionMarkerForegroundColorTwoCharFirst: string;
   easymotionMarkerForegroundColorTwoCharSecond: string;
   easymotionIncSearchForegroundColor: string;
+  easymotionIncSearchBackgroundColor: string;
   easymotionDimColor: string;
   easymotionDimBackground: boolean;
   easymotionMarkerFontWeight: string;

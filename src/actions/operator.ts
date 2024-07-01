@@ -229,10 +229,13 @@ export class YankOperator extends BaseOperator {
 
     Register.put(vimState, text, this.multicursorIndex, true);
 
-    vimState.cursorStopPosition =
-      vimState.currentMode === Mode.Normal && vimState.currentRegisterMode === RegisterMode.LineWise
-        ? start.with({ character: vimState.cursorStopPosition.character })
-        : start;
+    if (!vimState.easyMotion.clearRemoteYank(vimState)) {
+      vimState.cursorStopPosition =
+        vimState.currentMode === Mode.Normal &&
+        vimState.currentRegisterMode === RegisterMode.LineWise
+          ? start.with({ character: vimState.cursorStopPosition.character })
+          : start;
+    }
 
     await vimState.setCurrentMode(Mode.Normal);
 

@@ -7,10 +7,14 @@ export class MarkerGenerator {
   private keyTable: string[];
   private prefixKeyTable: string[];
 
-  constructor(matchesCount: number) {
+  constructor(matchesCount: number, nextKeys: Set<string>) {
     this.matchesCount = matchesCount;
-    this.keyTable = this.getKeyTable();
-    this.prefixKeyTable = this.createPrefixKeyTable();
+    this.keyTable = this.getKeyTable().filter((key) => !nextKeys.has(key));
+    if (nextKeys.size > 0) {
+      this.prefixKeyTable = [];
+    } else {
+      this.prefixKeyTable = this.createPrefixKeyTable();
+    }
   }
 
   public generateMarker(index: number, markerPosition: Position): Marker | null {

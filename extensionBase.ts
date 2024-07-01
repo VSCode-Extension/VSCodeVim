@@ -321,7 +321,7 @@ export async function activate(context: vscode.ExtensionContext, handleLocal: bo
         return;
       }
 
-      if (mh.currentMode === Mode.EasyMotionMode) {
+      if (mh.currentMode === Mode.EasyMotionMode || mh.currentMode === Mode.EasyMotionInputMode) {
         return;
       }
 

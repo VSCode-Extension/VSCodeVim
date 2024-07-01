@@ -6,6 +6,7 @@ import {
   EasyMotionWordMoveCommandBase,
   SearchByCharCommand,
   SearchByNCharCommand,
+  SearchAroundCommand,
 } from './easymotion.cmd';
 
 // EasyMotion n-char-move command
@@ -15,10 +16,27 @@ class EasyMotionNCharSearchCommand extends EasyMotionCharMoveCommandBase {
   keys = buildTriggerKeys({ key: '/' });
 
   constructor() {
-    super(new SearchByNCharCommand());
+    super(new SearchByNCharCommand(), true);
   }
 }
 
+@RegisterAction
+class EasyMotionSearchAroundCommand extends EasyMotionCharMoveCommandBase {
+  keys = buildTriggerKeys({ key: 's', leaderCount: 3 });
+
+  constructor() {
+    super(new SearchAroundCommand(), true);
+  }
+}
+
+@RegisterAction
+class EasyMotionRemoteYankCommand extends EasyMotionCharMoveCommandBase {
+  keys = buildTriggerKeys({ key: 'yr', leaderCount: 3 });
+
+  constructor() {
+    super(new SearchAroundCommand(), true, true);
+  }
+}
 // EasyMotion char-move commands
 
 @RegisterAction

@@ -262,6 +262,7 @@ class Configuration implements IConfiguration {
   easymotionMarkerForegroundColorTwoCharFirst = '#ffb400';
   easymotionMarkerForegroundColorTwoCharSecond = '#b98300';
   easymotionIncSearchForegroundColor = '#7fbf00';
+  easymotionIncSearchBackgroundColor = '#0000';
   easymotionDimColor = '#777777';
   easymotionDimBackground = true;
   easymotionMarkerFontWeight = 'bold';

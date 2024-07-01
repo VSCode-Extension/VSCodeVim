@@ -652,6 +652,11 @@
           "default": "#7fbf00",
           "markdownDescription": "Set a custom color for the easymotion search n-character (default `<leader><leader>/`)."
         },
+        "vim.easymotionIncSearchBackgroundColor": {
+          "type": "string",
+          "default": "#0000",
+          "markdownDescription": "Set a custom background color for the easymotion search n-character (default `<leader><leader>/`)."
+        },
         "vim.easymotionDimColor": {
           "type": "string",
           "default": "#777777",
