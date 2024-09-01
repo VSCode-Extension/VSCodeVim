@@ -49,6 +49,7 @@ import { StatusBar } from '../statusBar';
 import { ExCommand } from './exCommand';
 import { LineRange } from './lineRange';
 import { nameAbbrevParser } from './parserUtils';
+import { HelpCommand } from '../cmd_line/commands/help';
 
 type ArgParser = Parser<ExCommand>;
 
@@ -248,7 +249,7 @@ export const builtinExCommands: ReadonlyArray<[[string, string], ArgParser | und
   [['grepa', 'dd'], undefined],
   [['gu', 'i'], undefined],
   [['gv', 'im'], undefined],
-  [['h', 'elp'], undefined],
+  [['h', 'elp'], HelpCommand.argParser],
   [['ha', 'rdcopy'], undefined],
   [['helpc', 'lose'], undefined],
   [['helpg', 'rep'], undefined],

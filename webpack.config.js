@@ -97,6 +97,7 @@ const nodelessConfig = {
       path: require.resolve('path-browserify'),
       process: require.resolve('process/browser'),
       util: require.resolve('util'),
+      fs: false,
     },
   },
   optimization: {
