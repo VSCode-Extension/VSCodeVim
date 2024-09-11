@@ -729,7 +729,7 @@ class InsideIndentObjectBoth extends IndentObjectMatch {
   override includeLineBelow = true;
 }
 
-abstract class SelectArgument extends TextObject {
+export abstract class SelectArgument extends TextObject {
   override modes = [Mode.Normal, Mode.Visual];
 
   private static openingDelimiterCharacters(): string[] {

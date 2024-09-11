@@ -1,5 +1,6 @@
 import { newTest } from '../testSimplifier';
 import { cleanUpWorkspace, setupWorkspace } from '../testUtils';
+import { Mode } from '../../src/mode/mode';
 
 suite('lastNextObject plugin', () => {
   suite('lastNextObject plugin disabled', () => {
@@ -624,6 +625,153 @@ suite('lastNextObject plugin', () => {
         '', //
         '(|)b', //
       ],
+    });
+    // Test next/last argument
+    newTest({
+      title: 'Can select the first argument before opening bracket',
+      start: ['fu|nction(foo, bar, baz)'],
+      keysPressed: 'dina',
+      end: ['function(|, bar, baz)'],
+    });
+    newTest({
+      title: 'Can select the second argument with cursor at opening bracket',
+      start: ['function|(foo, bar, baz)'],
+      keysPressed: 'dina',
+      end: ['function(foo, |, baz)'],
+    });
+    newTest({
+      title:
+        'Can search backwards for an argument if there is no last argument in current bracket pair',
+      start: ['(foo, bar) function(f|oo, bar, baz)'],
+      keysPressed: 'dila',
+      end: ['(foo, |) function(foo, bar, baz)'],
+    });
+    newTest({
+      title:
+        'Can search forward for an argument if there is no next argument in current bracket pair',
+      start: ['function(foo, bar, b|az)(foo, bar)'],
+      keysPressed: 'dina',
+      end: ['function(foo, bar, baz)(|, bar)'],
+    });
+    newTest({
+      title: 'Can select inside next argument',
+      start: ['function(foo, b|ar, baz)'],
+      keysPressed: 'dina',
+      end: ['function(foo, bar, |)'],
+    });
+    newTest({
+      title: 'Can select around next argument',
+      start: ['function(foo, b|ar, baz)'],
+      keysPressed: 'dana',
+      end: ['function(foo, bar|)'],
+    });
+    newTest({
+      title: 'Can select inside last argument',
+      start: ['function(foo, b|ar, baz)'],
+      keysPressed: 'dila',
+      end: ['function(|, bar, baz)'],
+    });
+    newTest({
+      title: 'Can select around last argument',
+      start: ['function(foo, b|ar, baz)'],
+      keysPressed: 'dala',
+      end: ['function(|bar, baz)'],
+    });
+    newTest({
+      title: 'Can do cina before (,,,)',
+      start: ['fu|nction(,,,)'],
+      keysPressed: 'cina',
+      end: ['function(|,,,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do clia after (,,,)',
+      start: ['function(,,,)(f|oo, bar)'],
+      keysPressed: 'cila',
+      end: ['function(,,,|)(foo, bar)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cina in (,,,) with cursor at opening bracket',
+      start: ['function|(,,,)'],
+      keysPressed: 'cina',
+      end: ['function(,|,,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cila in (,,,) with cursor at closing bracket',
+      start: ['function(,,,|)'],
+      keysPressed: 'cila',
+      end: ['function(,,|,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cina in (,,,) with cursor at regular delimiter',
+      start: ['function(,|,,)'],
+      keysPressed: 'cina',
+      end: ['function(,,,|)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cina in (,,,) with cursor at the first delimiter',
+      start: ['function(|,,,)'],
+      keysPressed: 'cina',
+      end: ['function(,,|,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cila in (,,,) with cursor at regular delimiter',
+      start: ['function(,|,,)'],
+      keysPressed: 'cila',
+      end: ['function(|,,,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cila in (,,,) with cursor at last delimiter',
+      start: ['function(,,|,)'],
+      keysPressed: 'cila',
+      end: ['function(,|,,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cina before ()',
+      start: ['fu|nction()'],
+      keysPressed: 'cina',
+      end: ['function(|)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cila after ()',
+      start: ['function()ba|r'],
+      keysPressed: 'cila',
+      end: ['function(|)bar'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cina before (,)',
+      start: ['fu|nction(,)'],
+      keysPressed: 'cina',
+      end: ['function(|,)'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'Can do cila after (,)',
+      start: ['function(,)ba|r'],
+      keysPressed: 'cila',
+      end: ['function(,|)bar'],
+      endMode: Mode.Insert,
+    });
+    newTest({
+      title: 'cina will look for the next argument across lines',
+      start: ['fu|nction (', '  foo', ') {}'],
+      keysPressed: 'cina',
+      end: ['function (', '  |', ') {}'],
+    });
+    newTest({
+      title: 'cila will look for the last argument across lines',
+      start: ['function (', '  foo', ') {|}'],
+      keysPressed: 'cila',
+      end: ['function (', '  |', ') {}'],
     });
   });
 });

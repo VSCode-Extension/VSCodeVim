@@ -1,3 +1,5 @@
+import { configuration } from '../../../configuration/configuration';
+import { SelectAroundArgument, SelectInnerArgument } from '../../../textobject/textobject';
 import { RegisterAction } from '../../base';
 import {
   MoveAroundCaret,
@@ -9,7 +11,7 @@ import {
   MoveInsideParentheses,
   MoveInsideSquareBracket,
 } from '../../motion';
-import { LastObject, NextObject } from './lastNextObjectHelper';
+import { LastArgument, LastObject, NextArgument, NextObject } from './lastNextObjectHelper';
 
 @RegisterAction
 class MoveInsideNextParentheses extends NextObject(MoveInsideParentheses) {
@@ -89,4 +91,36 @@ class MoveAroundNextCaret extends NextObject(MoveAroundCaret) {
 @RegisterAction
 class MoveAroundLastCaret extends LastObject(MoveAroundCaret) {
   override readonly charToFind: string = '>';
+}
+
+@RegisterAction
+class MoveInsideNextArgument extends NextArgument(SelectInnerArgument) {
+  override readonly charsToFind: string[] = [
+    ...configuration.argumentObjectSeparators,
+    ...configuration.argumentObjectOpeningDelimiters,
+  ];
+}
+
+@RegisterAction
+class MoveInsideLastArgument extends LastArgument(SelectInnerArgument) {
+  override readonly charsToFind: string[] = [
+    ...configuration.argumentObjectSeparators,
+    ...configuration.argumentObjectClosingDelimiters,
+  ];
+}
+
+@RegisterAction
+class MoveAroundNextArgument extends NextArgument(SelectAroundArgument) {
+  override readonly charsToFind: string[] = [
+    ...configuration.argumentObjectSeparators,
+    ...configuration.argumentObjectOpeningDelimiters,
+  ];
+}
+
+@RegisterAction
+class MoveAroundLastArgument extends LastArgument(SelectAroundArgument) {
+  override readonly charsToFind: string[] = [
+    ...configuration.argumentObjectSeparators,
+    ...configuration.argumentObjectClosingDelimiters,
+  ];
 }
