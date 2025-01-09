@@ -61,14 +61,21 @@ abstract class BaseEasyMotionCommand extends BaseCommand {
   }
 
   protected searchOptions(position: Position): SearchOptions {
-    switch (this._baseOptions.searchOptions) {
-      case 'min':
-        return { min: position };
-      case 'max':
-        return { max: position };
-      default:
-        return {};
-    }
+    if (this._baseOptions.searchDirection === 'forward') {
+      const ret: SearchOptions = { min: position };
+      if (this._baseOptions.searchRange === 'within_line') {
+        ret.max = position.getLineEnd();
+      }
+      return ret;
+    } else if (this._baseOptions.searchDirection === 'backward') {
+      const ret: SearchOptions = { max: position };
+      if (this._baseOptions.searchRange === 'within_line') {
+        ret.min = position.getLineBegin();
+      }
+      return ret;
+    } else if (this._baseOptions.searchRange === 'within_line') {
+      return { min: position.getLineBegin(), max: position.getLineEnd() };
+    } else return {};
   }
 
   public override async exec(position: Position, vimState: VimState): Promise<void> {

@@ -549,27 +549,28 @@ Based on [vim-easymotion](https://github.com/easymotion/vim-easymotion) and conf
 
 Once easymotion is active, initiate motions using the following commands. After you initiate the motion, text decorators/markers will be displayed and you can press the keys displayed to jump to that position. `leader` is configurable and is `\` by default.
 
-| Motion Command                      | Description                                                                                                    |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `<leader><leader> s <char>`         | Search character                                                                                               |
-| `<leader><leader> f <char>`         | Find character forwards                                                                                        |
-| `<leader><leader> F <char>`         | Find character backwards                                                                                       |
-| `<leader><leader> t <char>`         | Til character forwards                                                                                         |
-| `<leader><leader> T <char>`         | Til character backwards                                                                                        |
-| `<leader><leader> w`                | Start of word forwards                                                                                         |
-| `<leader><leader> b`                | Start of word backwards                                                                                        |
-| `<leader><leader> l`                | Matches beginning & ending of word, camelCase, after `_`, and after `#` forwards                               |
-| `<leader><leader> h`                | Matches beginning & ending of word, camelCase, after `_`, and after `#` backwards                              |
-| `<leader><leader> e`                | End of word forwards                                                                                           |
-| `<leader><leader> ge`               | End of word backwards                                                                                          |
-| `<leader><leader> j`                | Start of line forwards                                                                                         |
-| `<leader><leader> k`                | Start of line backwards                                                                                        |
-| `<leader><leader> / <char>... <CR>` | Search n-character                                                                                             |
-| `<leader><leader><leader> bdt`      | Til character                                                                                                  |
-| `<leader><leader><leader> bdw`      | Start of word                                                                                                  |
-| `<leader><leader><leader> bde`      | End of word                                                                                                    |
-| `<leader><leader><leader> bdjk`     | Start of line                                                                                                  |
-| `<leader><leader><leader> j`        | JumpToAnywhere motion; default behavior matches beginning & ending of word, camelCase, after `_` and after `#` |
+| Motion Command                       | Description                                                                                                    |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `<leader><leader> s <char>`          | Search character                                                                                               |
+| `<leader><leader> f <char>`          | Find character forwards                                                                                        |
+| `<leader><leader> F <char>`          | Find character backwards                                                                                       |
+| `<leader><leader> t <char>`          | Til character forwards                                                                                         |
+| `<leader><leader> T <char>`          | Til character backwards                                                                                        |
+| `<leader><leader> w`                 | Start of word forwards                                                                                         |
+| `<leader><leader> b`                 | Start of word backwards                                                                                        |
+| `<leader><leader> l`                 | Matches beginning & ending of word, camelCase, after `_`, and after `#` forwards                               |
+| `<leader><leader> h`                 | Matches beginning & ending of word, camelCase, after `_`, and after `#` backwards                              |
+| `<leader><leader> e`                 | End of word forwards                                                                                           |
+| `<leader><leader> ge`                | End of word backwards                                                                                          |
+| `<leader><leader> j`                 | Start of line forwards                                                                                         |
+| `<leader><leader> k`                 | Start of line backwards                                                                                        |
+| `<leader><leader> / <char>... <CR>`  | Search n-character                                                                                             |
+| `<leader><leader><leader> bdt`       | Til character                                                                                                  |
+| `<leader><leader><leader> bdw`       | Start of word                                                                                                  |
+| `<leader><leader><leader> bde`       | End of word                                                                                                    |
+| `<leader><leader><leader> bdjk`      | Start of line                                                                                                  |
+| `<leader><leader><leader> j`         | JumpToAnywhere motion; default behavior matches beginning & ending of word, camelCase, after `_` and after `#` |
+| `<leader><leader><leader> sl <char>` | Search character within line                                                                                   |
 
 `<leader><leader> (2s|2f|2F|2t|2T) <char><char>` and `<leader><leader><leader> bd2t <char>char>` are also available.
 The difference is character count required for search.
