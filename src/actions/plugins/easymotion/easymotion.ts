@@ -151,9 +151,9 @@ export class EasyMotion implements IEasyMotion {
           if (
             (options.min && pos.isBefore(options.min)) ||
             (options.max && pos.isAfter(options.max)) ||
-            Math.abs(pos.line - position.line) > 100
+            Math.abs(pos.line - position.line) > configuration.easymotionSearchLines
           ) {
-            // Stop searching after 100 lines in both directions
+            // Stop searching after 100(default) lines in both directions
             result = regex.exec(line);
           } else {
             // Update cursor index to the marker on the right side of the cursor

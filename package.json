@@ -677,6 +677,11 @@
           "description": "Regex matches for JumpToAnywhere motion.",
           "default": "\\b[A-Za-z0-9]|[A-Za-z0-9]\\b|_.|#.|[a-z][A-Z]"
         },
+        "vim.easymotionSearchLines": {
+          "type": "number",
+          "description": "Set the number of lines for the easymotion search.",
+          "default": 100
+        },
         "vim.replaceWithRegister": {
           "type": "boolean",
           "markdownDescription": "Enable the [ReplaceWithRegister](https://github.com/vim-scripts/ReplaceWithRegister) plugin for Vim.",
