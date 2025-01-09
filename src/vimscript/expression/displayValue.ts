@@ -42,5 +42,7 @@ export function displayValue(value: Value, topLevel = true): string {
           .join('')
           .toUpperCase()
       );
+    case 'register_val':
+      return `register('${value.content}',  ${value.registerMode})`;
   }
 }
