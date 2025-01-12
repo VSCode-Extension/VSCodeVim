@@ -48,6 +48,9 @@ export class PairMatcher {
     const linePosition = position.character;
     const lineCount = vimState.document.lineCount;
     const cursorChar = vimState.document.lineAt(position).text[position.character];
+    let inString = false;
+    let quotationChar = '';
+
     if (
       allowCurrentPosition &&
       vimState.cursorStartPosition.isEqual(vimState.cursorStopPosition) &&
@@ -79,23 +82,29 @@ export class PairMatcher {
           nextChar = lineText.pop();
         }
 
-        if (nextChar === charToStack) {
-          stackHeight++;
-        } else if (nextChar === charToFind) {
-          stackHeight--;
-        } else {
-          continue;
+        if (!inString && (nextChar === '"' || nextChar === "'")) {
+          inString = true;
+          quotationChar = nextChar;
+        } else if (inString && nextChar === quotationChar) {
+          inString = false;
+          quotationChar = '';
+        } else if (!inString) {
+          if (nextChar === charToStack) {
+            stackHeight++;
+          } else if (nextChar === charToFind) {
+            stackHeight--;
+          }
         }
-      }
 
-      if (stackHeight <= -1) {
-        let pairMemberChar: number;
-        if (isNextMatchForward) {
-          pairMemberChar = Math.max(0, originalLineLength - lineText.length - 1);
-        } else {
-          pairMemberChar = lineText.length;
+        if (stackHeight <= -1) {
+          let pairMemberChar: number;
+          if (isNextMatchForward) {
+            pairMemberChar = Math.max(0, originalLineLength - lineText.length - 1);
+          } else {
+            pairMemberChar = lineText.length;
+          }
+          return new Position(lineNumber, pairMemberChar);
         }
-        return new Position(lineNumber, pairMemberChar);
       }
 
       if (isNextMatchForward) {
