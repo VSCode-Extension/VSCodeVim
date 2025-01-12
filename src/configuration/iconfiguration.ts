@@ -83,6 +83,7 @@ export interface ITargetsConfiguration {
    */
   enable: boolean;
   bracketObjects: { enable: boolean };
+  separatorObjects: { enable: boolean };
   smartQuotes: ISmartQuotesConfiguration;
 }
 
