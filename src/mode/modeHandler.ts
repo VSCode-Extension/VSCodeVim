@@ -853,7 +853,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
 
     ranRepeatableAction =
       (ranRepeatableAction && this.vimState.currentMode === Mode.Normal) ||
-      this.createUndoPointForBrackets();
+      (await this.createUndoPointForBrackets());
 
     // We don't want to record a repeatable action when exiting from these modes
     // by pressing <Esc>
@@ -1748,7 +1748,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
   }
 
   // Return true if a new undo point should be created based on brackets and parentheses
-  private createUndoPointForBrackets(): boolean {
+  private async createUndoPointForBrackets(): Promise<boolean> {
     // }])> keys all start a new undo state when directly next to an {[(< opening character
     const key =
       this.vimState.recordedState.actionKeys[this.vimState.recordedState.actionKeys.length - 1];
@@ -1759,7 +1759,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
 
     if (this.vimState.currentMode === Mode.Insert) {
       // Check if the keypress is a closing bracket to a corresponding opening bracket right next to it
-      let result = PairMatcher.nextPairedChar(
+      let result = await PairMatcher.nextPairedChar(
         this.vimState.cursorStopPosition,
         key,
         this.vimState,
@@ -1771,7 +1771,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
         }
       }
 
-      result = PairMatcher.nextPairedChar(
+      result = await PairMatcher.nextPairedChar(
         this.vimState.cursorStopPosition.getLeft(),
         key,
         this.vimState,
