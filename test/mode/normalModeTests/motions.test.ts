@@ -5,6 +5,22 @@ import { newTest, newTestSkip } from '../../testSimplifier';
 suite('Motions in Normal Mode', () => {
   suiteSetup(setupWorkspace);
 
+  suite('cjk', () => {
+    newTest({
+      title: 'j moves to right char downwards',
+      start: ['ああ|あああ123456', 'aaaaaaaaaa123456'],
+      keysPressed: 'j',
+      end: ['あああああ123456', 'aaaa|aaaaaa123456'],
+    });
+
+    newTest({
+      title: 'k moves to right char upwards',
+      start: ['あああああ123456', 'aaaa|aaaaaa123456'],
+      keysPressed: 'k',
+      end: ['ああ|あああ123456', 'aaaaaaaaaa123456'],
+    });
+  });
+
   suite('w', () => {
     newTest({
       title: 'w moves to next word',
