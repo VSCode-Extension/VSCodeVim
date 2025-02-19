@@ -599,6 +599,15 @@ Some examples:
 - `"test"` with cursor inside quotes type `ds"` to end up with `test`
 - `"test"` with cursor inside quotes type `cs"t` and enter `123>` to end up with `<123>test</123>`
 
+Surround mappings:
+since 1.20, we internally use special key notation for surround ( `<plugys>`, `<plugcs>`, `<plugds>` ), for which we create default mappings. This has two consequences:
+
+- custom mappings need to use these too.\
+  Example: `nnoremap s" <plugys>iw"`
+- if you use a custom keyboard layout (workman, dvorak, etc.), the default mappings will not fit for you.
+  You need to disable by settting `vim.enableDefaultPluginMappings` to false and then create a mapping for the 3 key sequences above, like so:\
+  Example: `nnoremap ys <plugys>` where you replace `ys` with what fits for your layout.
+
 ### vim-commentary
 
 Similar to [vim-commentary](https://github.com/tpope/vim-commentary), but uses the VS Code native _Toggle Line Comment_ and _Toggle Block Comment_ features.

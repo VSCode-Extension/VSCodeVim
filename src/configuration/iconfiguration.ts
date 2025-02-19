@@ -176,6 +176,10 @@ export interface IConfiguration {
   surround: boolean;
 
   /**
+   * create default mappings for surround plugin
+   */
+  enableDefaultPluginMappings: boolean;
+  /**
    * Customize argument textobject delimiter and separator characters
    */
   argumentObjectSeparators: string[];
