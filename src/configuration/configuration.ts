@@ -63,14 +63,6 @@ export const optionAliases: ReadonlyMap<string, string> = new Map<string, string
 
 type OptionValue = number | string | boolean;
 
-interface VSCodeKeybinding {
-  key: string;
-  mac?: string;
-  linux?: string;
-  command: string;
-  when: string;
-}
-
 interface IHandleKeys {
   [key: string]: boolean;
 }
