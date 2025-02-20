@@ -24,6 +24,8 @@ import { WordType } from './word';
 export abstract class TextObject extends BaseMovement {
   override modes = [Mode.Normal, Mode.Visual, Mode.VisualBlock];
 
+  public static readonly attrRegExp = /[\w.:@-]+=(["']).*?\1|[\w.:@-]+=\{.*?\}/;
+
   public override async execActionForOperator(
     position: Position,
     vimState: VimState,
@@ -585,6 +587,50 @@ export class SelectEntireIgnoringLeadingTrailing extends TextObject {
       stop = stop.getUp();
     }
     stop = stop.getLineEnd();
+
+    return {
+      start,
+      stop,
+    };
+  }
+}
+
+@RegisterAction
+export class SelectAttrs extends TextObject {
+  keys = ['a', 'r'];
+
+  public async execAction(position: Position, vimState: VimState): Promise<IMovement> {
+    let start = position;
+    let stop = position;
+
+    const range = vimState.document.getWordRangeAtPosition(position, TextObject.attrRegExp);
+
+    if (range) {
+      start = range.start;
+      stop = range.end;
+    }
+
+    return {
+      start,
+      stop,
+    };
+  }
+}
+
+@RegisterAction
+export class SelectInnerAttrs extends TextObject {
+  keys = ['i', 'r'];
+
+  public async execAction(position: Position, vimState: VimState): Promise<IMovement> {
+    let start = position;
+    let stop = position;
+
+    const range = vimState.document.getWordRangeAtPosition(position, TextObject.attrRegExp);
+
+    if (range) {
+      start = range.start;
+      stop = range.end.getLeft();
+    }
 
     return {
       start,
