@@ -385,7 +385,7 @@
 | :arrow_down:                        | `{visual}!{command}<CR>`                       | 通过{command}过滤高亮行                                                             |                                               |
 | :arrow_down:                        | `:[range]! {command}<CR>`                      | 通过{command}过滤[range]行                                                          |                                               |
 | :white_check_mark:                  | :1234: ={motion}                               | 过滤通过'equalprg'移动的行                                                          |                                               |
-| :white_check_mark:                  | :1234: ==                                      | 通过 ' 过滤 N 行                                                                    |                                               |
+| :white_check_mark:                  | :1234: ==                                      | 通过'equalprg'过滤 N 行                                                                    |                                               |
 | :white_check_mark:                  | {visual}=                                      | 通过'equalprg'过滤高亮行                                                            |                                               |
 | :white_check_mark: :star: :warning: | :[range]s[ubstitute]/{pattern}/{string}/[g][c] | 在[range]行中用{string}替换{pattern};用[g]替换所有出现的{pattern};[c]，确认每次更换 | 当前只支持 JavaScript 的正则;仅实现了'gi'选项 |
 | :arrow_down:                        | :[range]s[ubstitute][g][c]                     | 使用新的范围和选项重复上一个":s"                                                    |                                               |
