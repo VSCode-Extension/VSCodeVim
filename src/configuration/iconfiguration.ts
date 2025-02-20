@@ -234,6 +234,11 @@ export interface IConfiguration {
   inccommand: '' | 'append' | 'replace';
 
   /**
+   * Use `gf` to open file position
+   */
+  openFilePosition: 'relative' | 'absolute';
+
+  /**
    * Show results of / or ? search as user is typing?
    */
   incsearch: boolean;

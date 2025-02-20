@@ -784,6 +784,19 @@
             "Replace matched text with substitutions"
           ]
         },
+        "vim.openFilePosition": {
+          "type": "string",
+          "markdownDescription": "use `gf` to open file position by relative or absolute.",
+          "default": "relative",
+          "enum": [
+            "relative",
+            "absolute"
+          ],
+          "enumDescriptions": [
+            "Open file position by relative position.",
+            "Open file position by absolute position."
+          ]
+        },
         "vim.incsearch": {
           "type": "boolean",
           "markdownDescription": "Show where a `/` or `?` search matches as you type it.",
