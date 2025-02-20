@@ -2259,6 +2259,27 @@ class ActionTriggerHover extends BaseCommand {
   }
 }
 
+@RegisterAction
+export class ActionPreviousFindMatch extends BaseCommand {
+  modes = [Mode.Normal, Mode.Visual];
+  keys = ['g', 'B'];
+  override runsOnceForEveryCursor() {
+    return false;
+  }
+  override runsOnceForEachCountPrefix = true;
+
+  public override async exec(position: Position, vimState: VimState): Promise<void> {
+    await vscode.commands.executeCommand('editor.action.addSelectionToPreviousFindMatch');
+    vimState.cursors = getCursorsAfterSync(vimState.editor);
+
+    // If this is the first cursor, select 1 character less
+    // so that only the word is selected, no extra character
+    vimState.cursors = vimState.cursors.map((x) => x.withNewStop(x.stop.getLeft()));
+
+    await vimState.setCurrentMode(Mode.Visual);
+  }
+}
+
 /**
  * Multi-Cursor Command Overrides
  *
