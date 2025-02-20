@@ -67,6 +67,18 @@ defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool fa
 defaults delete -g ApplePressAndHoldEnabled                                           # If necessary, reset global default
 ```
 
+For Cursor (or any other application that's not in the list above), first grab its identifier:
+
+```sh
+mdls -name kMDItemCFBundleIdentifier /Applications/Cursor.app
+```
+
+Then use its identifier as above:
+
+```sh
+defaults write <identifier without quotes here> ApplePressAndHoldEnabled -bool false
+```
+
 We also recommend increasing Key Repeat and Delay Until Repeat settings in _System Preferences -> Keyboard_.
 
 ### Windows
