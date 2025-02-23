@@ -420,6 +420,46 @@
         "when": "editorTextFocus && vim.active && vim.use<D-v> && vim.mode == 'CommandlineInProgress' && !inDebugRepl || editorTextFocus && vim.active && vim.use<D-v> && vim.mode == 'SearchInProgressMode' && !inDebugRepl"
       },
       {
+        "key": "alt+y",
+        "command": "extension.vim_alt+y",
+        "when": "editorTextFocus && vim.active && vim.use<A-y> && !inDebugRepl"
+      },
+      {
+        "key": "alt+w",
+        "command": "extension.vim_alt+w",
+        "when": "editorTextFocus && vim.active && vim.use<A-w> && !inDebugRepl"
+      },
+      {
+        "key": "alt+k",
+        "command": "extension.vim_alt+k",
+        "when": "editorTextFocus && vim.active && vim.use<A-k> && !inDebugRepl"
+      },
+      {
+        "key": "alt+r",
+        "command": "extension.vim_alt+r",
+        "when": "editorTextFocus && vim.active && vim.use<A-r> && !inDebugRepl"
+      },
+      {
+        "key": "alt+a",
+        "command": "extension.vim_alt+a",
+        "when": "editorTextFocus && vim.active && vim.use<A-a> && !inDebugRepl"
+      },
+      {
+        "key": "alt+e",
+        "command": "extension.vim_alt+e",
+        "when": "editorTextFocus && vim.active && vim.use<A-e> && !inDebugRepl"
+      },
+      {
+        "key": "alt+n",
+        "command": "extension.vim_alt+n",
+        "when": "editorTextFocus && vim.active && vim.use<A-n> && !inDebugRepl"
+      },
+      {
+        "key": "alt+p",
+        "command": "extension.vim_alt+p",
+        "when": "editorTextFocus && vim.active && vim.use<A-p> && !inDebugRepl"
+      },
+      {
         "key": "ctrl+alt+down",
         "linux": "shift+alt+down",
         "mac": "cmd+alt+down",
@@ -471,6 +511,11 @@
         "vim.useCtrlKeys": {
           "type": "boolean",
           "markdownDescription": "Enable some Vim Ctrl key commands that override otherwise common operations, like `Ctrl+C`.",
+          "default": true
+        },
+        "vim.useAltKeys": {
+          "type": "boolean",
+          "markdownDescription": "Enable some Vim Alt key commands that override otherwise common operations, like `Alt+Y`.",
           "default": true
         },
         "vim.leader": {
@@ -526,6 +571,11 @@
           "type": "boolean",
           "description": "Use system clipboard for unnamed register.",
           "default": false
+        },
+        "vim.killRingMax": {
+          "type": "number",
+          "description": "Maximum length of kill ring before oldest elements are thrown away.",
+          "default": 120
         },
         "vim.overrideCopy": {
           "type": "boolean",

@@ -155,6 +155,8 @@ export class DeleteOperator extends BaseOperator {
           : text;
     }
     Register.put(vimState, text, this.multicursorIndex, true);
+    // Put into kill ring
+    vimState.historyTracker.yankToKillRing(text);
 
     // When deleting the last line linewise, we need to delete the newline
     // character BEFORE the range because there isn't one after the range.
@@ -245,6 +247,8 @@ export class YankOperator extends BaseOperator {
     this.highlightYankedRanges(vimState, [range]);
 
     Register.put(vimState, text, this.multicursorIndex, true);
+    // Put into kill ring
+    vimState.historyTracker.yankToKillRing(text);
 
     vimState.cursorStopPosition =
       vimState.currentMode === Mode.Normal && vimState.currentRegisterMode === RegisterMode.LineWise
@@ -673,8 +677,11 @@ export class ChangeOperator extends BaseOperator {
     }
 
     const deleteRange = new vscode.Range(start, end);
+    const text = vimState.document.getText(deleteRange);
 
-    Register.put(vimState, vimState.document.getText(deleteRange), this.multicursorIndex, true);
+    Register.put(vimState, text, this.multicursorIndex, true);
+    // Put into kill ring
+    vimState.historyTracker.yankToKillRing(text);
 
     if (vimState.currentRegisterMode === RegisterMode.LineWise && configuration.autoindent) {
       // Linewise is a bit of a special case - we want to preserve the first line's indentation,
@@ -729,7 +736,10 @@ class YankVisualBlockMode extends BaseOperator {
 
     this.highlightYankedRanges(vimState, ranges);
 
-    Register.put(vimState, lines.join('\n'), this.multicursorIndex, true);
+    const text = lines.join('\n')
+    Register.put(vimState, text, this.multicursorIndex, true);
+    // Put into kill ring
+    vimState.historyTracker.yankToKillRing(text);
 
     vimState.historyTracker.addMark(vimState.document, startPos, '<');
     vimState.historyTracker.addMark(vimState.document, endPos, '>');

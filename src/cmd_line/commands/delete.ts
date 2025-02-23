@@ -79,6 +79,8 @@ export class DeleteCommand extends ExCommand {
     }
     vimState.currentRegisterMode = RegisterMode.LineWise;
     Register.put(vimState, text, 0, true);
+    // Put into kill ring
+    vimState.historyTracker.yankToKillRing(text);
   }
 
   async execute(vimState: VimState): Promise<void> {

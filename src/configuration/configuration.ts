@@ -192,6 +192,8 @@ class Configuration implements IConfiguration {
         } else {
           useKey = false;
         }
+      } else if (!this.useAltKeys && boundKey.key.slice(1, 3) === 'A-') {
+        useKey = false;
       }
 
       void VSCodeContext.set(`vim.use${boundKey.key}`, useKey);
@@ -230,9 +232,13 @@ class Configuration implements IConfiguration {
 
   useSystemClipboard = false;
 
+  killRingMax = 120;
+
   shell = '';
 
   useCtrlKeys = false;
+
+  useAltKeys = false;
 
   overrideCopy = true;
 

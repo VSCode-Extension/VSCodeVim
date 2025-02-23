@@ -35,6 +35,11 @@ class GlobalState {
    * Used internally for nohl.
    */
   public hl = true;
+
+  /**
+   * List of killed text sequences.
+   */
+  public killRing: string[] = [];
 }
 
 export const globalState = new GlobalState();

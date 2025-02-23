@@ -32,6 +32,7 @@ VSCodeVim is a Vim emulator for [Visual Studio Code](https://code.visualstudio.c
   - [Vim settings](#vim-settings)
 - [.vimrc support](#vimrc-support)
 - [🖱️ Multi-Cursor Mode](#️-multi-cursor-mode)
+- [Kill ring support](#kill-ring-support)
 - [🔌 Emulated Plugins](#-emulated-plugins)
   - [vim-airline](#vim-airline)
   - [vim-easymotion](#vim-easymotion)
@@ -135,6 +136,7 @@ These settings are specific to VSCodeVim.
 | vim.handleKeys                   | Delegate configured keys to be handled by VS Code instead of by the VSCodeVim extension. Any key in `keybindings` section of the [package.json](https://github.com/VSCodeVim/Vim/blob/master/package.json) that has a `vim.use<C-...>` in the `when` argument can be delegated back to VS Code by setting `"<C-...>": false`. Example: to use `ctrl+f` for find (native VS Code behavior): `"vim.handleKeys": { "<C-f>": false }`. | String  | `"<C-d>": true`<br /> `"<C-s>": false`<br /> `"<C-z>": false` |
 | vim.overrideCopy                 | Override VS Code's copy command with our own, which works correctly with VSCodeVim. If cmd-c/ctrl-c is giving you issues, set this to false and complain [here](https://github.com/Microsoft/vscode/issues/217).                                                                                                                                                                                                                   | Boolean | false                                                         |
 | vim.useSystemClipboard           | Use the system clipboard register (`*`) as the default register                                                                                                                                                                                                                                                                                                                                                                    | Boolean | false                                                         |
+| vim.killRingMax           | Maximum length of kill ring before oldest elements are thrown away.                                                                                                                                                                                                                                                                                                                                                                    | Number | 120                                                         |
 | vim.searchHighlightColor         | Background color of non-current search matches                                                                                                                                                                                                                                                                                                                                                                                     | String  | `findMatchHighlightBackground` ThemeColor                     |
 | vim.searchHighlightTextColor     | Foreground color of non-current search matches                                                                                                                                                                                                                                                                                                                                                                                     | String  | None                                                          |
 | vim.searchMatchColor             | Background color of current search match                                                                                                                                                                                                                                                                                                                                                                                           | String  | `findMatchBackground` ThemeColor                              |
@@ -505,6 +507,10 @@ Once you have multiple cursors, you should be able to use Vim commands as you se
 
 - Each cursor has its own clipboard.
 - Pressing Escape in Multi-Cursor Visual Mode will bring you to Multi-Cursor Normal mode. Pressing it again will return you to Normal mode.
+
+## Kill ring support
+
+You can set the maximum length of kill ring with `vim.killRingMax`. To yank from the kill ring, VSCodeVim with kill ring provides `alt-y` keybinding, following Emacs's.
 
 ## 🔌 Emulated Plugins
 

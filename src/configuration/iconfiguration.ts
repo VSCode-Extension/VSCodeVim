@@ -95,9 +95,19 @@ export interface IConfiguration {
   useSystemClipboard: boolean;
 
   /**
+   * Maximum length of kill ring before oldest elements are thrown away.
+   */
+  killRingMax: number;
+
+  /**
    * Enable ctrl- actions that would override existing VSCode actions.
    */
   useCtrlKeys: boolean;
+
+  /**
+   * Enable alt- actions that would override existing VSCode actions.
+   */
+  useAltKeys: boolean;
 
   /**
    * Override default VSCode copy behavior.

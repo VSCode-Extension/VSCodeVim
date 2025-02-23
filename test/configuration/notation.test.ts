@@ -26,6 +26,7 @@ suite('Notation', () => {
       '<S-J>': 'J',
       '<s-j>': 'J',
       '<s-J>': 'J',
+      "alt+y": '<A-y>',
     };
 
     for (const test in testCases) {

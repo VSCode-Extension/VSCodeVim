@@ -27,6 +27,7 @@ import {
   DocumentContentChangeAction,
 } from './actions';
 import { DefaultDigraphs } from './digraphs';
+import { globalState } from '../../state/globalState';
 
 @RegisterAction
 export class CommandEscInsertMode extends BaseCommand {
@@ -500,6 +501,24 @@ class CommandCtrlVInInsertMode extends BaseCommand {
   public override async exec(position: Position, vimState: VimState): Promise<void> {
     const clipboard = await Register.get('*', this.multicursorIndex);
     const text = clipboard?.text instanceof RecordedState ? undefined : clipboard?.text;
+
+    if (text) {
+      vimState.recordedState.transformer.insert(vimState.cursorStopPosition, text);
+    }
+  }
+}
+
+@RegisterAction
+class AltYInInsertMode extends BaseCommand {
+  modes = [Mode.Insert];
+  keys = ['<A-y>'];
+
+  public override async exec(position: Position, vimState: VimState): Promise<void> {
+    const text = await vscode.window.showQuickPick([
+      ...new Set(globalState.killRing.reverse()),
+    ], {
+      placeHolder: "Choose which kill to yank"
+    });
 
     if (text) {
       vimState.recordedState.transformer.insert(vimState.cursorStopPosition, text);

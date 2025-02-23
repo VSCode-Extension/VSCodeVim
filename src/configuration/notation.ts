@@ -3,6 +3,7 @@ export class Notation {
   private static readonly notationMap: ReadonlyArray<[RegExp, string]> = [
     [/ctrl\+|c\-/gi, 'C-'],
     [/cmd\+|d\-/gi, 'D-'],
+    [/alt\+|a\-/gi, 'A-'],
     [/shift\+|s\-/gi, 'S-'],
     [/escape|esc/gi, 'Esc'],
     [/backspace|bs/gi, 'BS'],
