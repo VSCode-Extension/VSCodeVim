@@ -155,6 +155,7 @@ export interface IConfiguration {
    */
   smartRelativeLine: boolean;
 
+  indentwise: boolean;
   /**
    * Use sneak plugin?
    */

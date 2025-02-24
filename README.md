@@ -38,6 +38,7 @@ VSCodeVim is a Vim emulator for [Visual Studio Code](https://code.visualstudio.c
   - [vim-surround](#vim-surround)
   - [vim-commentary](#vim-commentary)
   - [vim-indent-object](#vim-indent-object)
+  - [vim-indentwise](#vim-indentwise)
   - [vim-sneak](#vim-sneak)
   - [CamelCaseMotion](#camelcasemotion)
   - [Input Method](#input-method)
@@ -619,6 +620,54 @@ Provided there is a new line between the opening and closing braces / tag, it ca
 | `<operator>ii` | This indentation level                                                                               |
 | `<operator>ai` | This indentation level and the line above (think `if` statements in Python)                          |
 | `<operator>aI` | This indentation level, the line above, and the line after (think `if` statements in C/C++/Java/etc) |
+
+### vim-indentwise
+
+Based on [vim-indentwise](https://github.com/jeetsukumaran/vim-indentwise), it allows moving by indentation level. Useful in languages that don't use braces around statements (e.g. Python) but also for other languages (e.g. to move to the next line that starts at column 0)
+
+| Setting                            | Description                                                 | Type    | Default Value |
+| ---------------------------------- | ----------------------------------------------------------- | ------- | ------------- |
+| vim.indentwise                     | Enable/disable vim-indentwise                               | Boolean | false         |
+
+There are 3 main ways of moving:
+* By **relative indent level**, either to a line with less, equal or greater indent.
+* To an **absolute indent level**. If spaces are used, the number of spaces that constitute a level is taken from the tabSize editor setting.
+* To the **beginning/end of the current block** (i.e. to the last line above/first line below the next/last line with less indent than block the current line is part of). Vim-indent-object described above is another useful alternative for this.
+
+In all modes, empty lines are ignored and never jumped to (use the jump by paragraph motion to go to empty lines).
+
+Absolute indent level jumps work a bit differently than they do in `vim-indentwise`: instead of using the optional count prefix to specify the level, the level is given at the end explicitly. This allows both to combine it with counts (e.g. `2]_0` to jump to the 2nd next line that has 0 indent), and also allows custom key remaps to specific levels (e.g. in python jumping to the next/previous line at indent level 0 is very common and you may want to use a custom keyboard shortcut to do this quicker)
+
+| Motion Command | Description                                                                                         |
+| -------------- | --------------------------------------------------------------------------------------------------- |
+| `]-`           | Move forward to the next line with less indentation than the current line                           |
+| `]=`           | Move forward to the next line with equal indentation with the current line                          |
+| `]+`           | Move forward to the next line with greater indentation than the current line                        |
+| `[-`           | Move backward to the last line with less indentation than the current line                          |
+| `[=`           | Move backward to the last line with equal indentation with the current line                         |
+| `[+`           | Move backward to the last line with greater indentation than the current line                       |
+| `]_0`          | Move forward to the next line with indent level 0                                                   |
+| `]_1`          | Move forward to the next line with indent level 1                                                   |
+| `]_2`          | Move forward to the next line with indent level 2                                                   |
+| `]_3`          | Move forward to the next line with indent level 3                                                   |
+| `]_4`          | Move forward to the next line with indent level 4                                                   |
+| `]_5`          | Move forward to the next line with indent level 5                                                   |
+| `]_6`          | Move forward to the next line with indent level 6                                                   |
+| `]_7`          | Move forward to the next line with indent level 7                                                   |
+| `]_8`          | Move forward to the next line with indent level 8                                                   |
+| `]_9`          | Move forward to the next line with indent level 9                                                   |
+| `[_0`          | Move backward to the last line with indent level 0                                                  |
+| `[_1`          | Move backward to the last line with indent level 1                                                  |
+| `[_2`          | Move backward to the last line with indent level 2                                                  |
+| `[_3`          | Move backward to the last line with indent level 3                                                  |
+| `[_4`          | Move backward to the last line with indent level 4                                                  |
+| `[_5`          | Move backward to the last line with indent level 5                                                  |
+| `[_6`          | Move backward to the last line with indent level 6                                                  |
+| `[_7`          | Move backward to the last line with indent level 7                                                  |
+| `[_8`          | Move backward to the last line with indent level 8                                                  |
+| `[_9`          | Move backward to the last line with indent level 9                                                  |
+| `]%`           | Move to the end of the current indentation block (the last line with the same indentation level)    |
+| `[%`           | Move to the start of the current indentation block (the first line with the same indentation level) |
 
 ### vim-sneak
 
