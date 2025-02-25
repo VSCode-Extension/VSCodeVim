@@ -27,7 +27,7 @@ async function searchCurrentWord(
   direction: SearchDirection,
   isExact: boolean,
 ): Promise<void> {
-  let currentWord = TextEditor.getWord(vimState.document, position);
+  const currentWord = TextEditor.getWord(vimState.document, position);
 
   if (currentWord) {
     if (/\W/.test(currentWord[0]) || /\W/.test(currentWord[currentWord.length - 1])) {
@@ -36,9 +36,6 @@ async function searchCurrentWord(
       isExact = false;
     }
 
-    if (isExact) {
-      currentWord = _.escapeRegExp(currentWord);
-    }
     // If the search is going left then use `getWordLeft()` on position to start
     // at the beginning of the word. This ensures that any matches happen
     // outside of the currently selected word.
