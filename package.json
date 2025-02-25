@@ -697,6 +697,11 @@
           "markdownDescription": "Enable last/next movements for bracket objects.",
           "default": true
         },
+        "vim.targets.separatorObjects.enable": {
+          "type": "boolean",
+          "markdownDescription": "Enable separator text objects.",
+          "default": true
+        },
         "vim.targets.smartQuotes.enable": {
           "type": "boolean",
           "markdownDescription": "Enable the smart quotes movements from [targets.vim](https://github.com/wellle/targets.vim#quote-text-objects).",

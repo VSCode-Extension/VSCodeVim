@@ -16,3 +16,12 @@ export function bracketObjectsEnabled(): boolean {
       configuration.targets.bracketObjects.enable === true)
   );
 }
+
+export function separatorObjectsEnabled(): boolean {
+  return (
+    (configuration.targets.enable === true &&
+      configuration.targets.separatorObjects.enable !== false) ||
+    (configuration.targets.enable === undefined &&
+      configuration.targets.separatorObjects.enable === true)
+  );
+}
