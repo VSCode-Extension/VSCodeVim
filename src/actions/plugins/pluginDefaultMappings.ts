@@ -28,11 +28,30 @@ export class PluginDefaultMappings {
       configSwitch: 'surround',
       mapping: { before: ['d', 's'], after: ['<plugds>'] },
     },
+    // support some special cases with mappings
+    // see: https://github.com/tpope/vim-surround/blob/master/doc/surround.txt, TARGETS w,W,s
+    {
+      mode: 'normalModeKeyBindingsNonRecursive',
+      configSwitch: 'surround',
+      mapping: { before: ['c', 's', 'w'], after: ['<plugys>', 'i', 'w'] },
+    },
+    {
+      mode: 'normalModeKeyBindingsNonRecursive',
+      configSwitch: 'surround',
+      mapping: { before: ['c', 's', 'W'], after: ['<plugys>', 'i', 'W'] },
+    },
+    {
+      mode: 'normalModeKeyBindingsNonRecursive',
+      configSwitch: 'surround',
+      mapping: { before: ['c', 's', 's'], after: ['<plugys>', 'i', 's'] },
+    },
   ];
 
   public static getPluginDefaultMappings(mode: string, config: IConfiguration): IKeyRemapping[] {
-    return this.defaultMappings
-      .filter((m) => m.mode === mode && config[m.configSwitch])
-      .map((m) => m.mapping);
+    return config.enableDefaultPluginMappings
+      ? this.defaultMappings
+          .filter((m) => m.mode === mode && config[m.configSwitch])
+          .map((m) => m.mapping)
+      : [];
   }
 }
