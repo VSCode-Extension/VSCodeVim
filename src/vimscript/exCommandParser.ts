@@ -16,7 +16,7 @@ import { GotoLineCommand } from '../cmd_line/commands/gotoLine';
 import { HistoryCommand } from '../cmd_line/commands/history';
 import { ClearJumpsCommand, JumpsCommand } from '../cmd_line/commands/jumps';
 import { CenterCommand, LeftCommand, RightCommand } from '../cmd_line/commands/leftRightCenter';
-import { DeleteMarksCommand, MarksCommand } from '../cmd_line/commands/marks';
+import { DeleteMarksCommand, MarksCommand, MarkCommand } from '../cmd_line/commands/marks';
 import { ExploreCommand } from '../cmd_line/commands/explore';
 import { MoveCommand } from '../cmd_line/commands/move';
 import { NohlCommand } from '../cmd_line/commands/nohl';
@@ -350,7 +350,7 @@ export const builtinExCommands: ReadonlyArray<[[string, string], ArgParser | und
   [['lvimgrepa', 'dd'], undefined],
   [['lw', 'indow'], succeed(new VsCodeCommand('workbench.action.focusCommentsPanel'))],
   [['m', 'ove'], MoveCommand.argParser],
-  [['ma', 'rk'], undefined],
+  [['ma', 'rk'], MarkCommand.argParser],
   [['mak', 'e'], undefined],
   [['map', ''], undefined],
   [['mapc', 'lear'], undefined],

@@ -133,3 +133,22 @@ export class DeleteMarksCommand extends ExCommand {
     vimState.historyTracker.removeMarks(marks);
   }
 }
+
+export class MarkCommand extends ExCommand {
+  public static readonly argParser: Parser<MarkCommand> = seq(
+    optWhitespace,
+    regexp(/[a-zA-Z'`<>[\].]/).desc('mark name'),
+    optWhitespace,
+  ).map(([, markName]) => new MarkCommand(markName));
+
+  private markName: string;
+  constructor(markName: string) {
+    super();
+    this.markName = markName;
+  }
+
+  async execute(vimState: VimState): Promise<void> {
+    const position = vimState.cursorStopPosition;
+    vimState.historyTracker.addMark(vimState.document, position, this.markName);
+  }
+}
