@@ -1156,6 +1156,116 @@
         }
       }
     },
+    "colors": [
+      {
+        "id": "statusBarItem.vimMode.Normal",
+        "description": "Vim status bar color for normal mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.Insert",
+        "description": "Vim status bar color for insert mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.Visual",
+        "description": "Vim status bar color for visual mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.VisualBlock",
+        "description": "Vim status bar color for visual block mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.VisualLine",
+        "description": "Vim status bar color for visual line mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.Replace",
+        "description": "Vim status bar color for replace mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.EasyMotionMode",
+        "description": "Vim status bar color for easy motion mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.EasyMotionInputMode",
+        "description": "Vim status bar color for easy motion input mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.SurroundInputMode",
+        "description": "Vim status bar color for surround input mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.Disabled",
+        "description": "Vim status bar color for disabled mode.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.SearchInProgressMode",
+        "description": "Vim status bar color for when a search is in progress.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      },
+      {
+        "id": "statusBarItem.vimMode.CommandlineInProgress",
+        "description": "Vim status bar color for when entering a command.",
+        "defaults": {
+          "dark": "statusBar.foreground",
+          "light": "statusBar.foreground",
+          "highContrast": "statusBar.foreground"
+        }
+      }
+    ],
     "languages": [
       {
         "id": "Vimscript",

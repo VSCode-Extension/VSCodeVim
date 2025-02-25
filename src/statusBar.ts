@@ -70,11 +70,7 @@ class StatusBarImpl implements vscode.Disposable {
     }
 
     // StatusBar color
-    const shouldUpdateColor =
-      configuration.statusBarColorControl && vimState.currentMode !== this.previousMode;
-    if (shouldUpdateColor) {
-      this.updateColor(vimState.currentMode);
-    }
+    this.updateColor(vimState.currentMode);
 
     this.previousMode = vimState.currentMode;
     this.showingDefaultMessage = false;
@@ -122,6 +118,23 @@ class StatusBarImpl implements vscode.Disposable {
   }
 
   private updateColor(mode: Mode) {
+    // original color update method - applies to the whole line by modifying the user's settings
+    if (configuration.statusBarColorControl && mode !== this.previousMode) {
+      this.updateWholeStatusBarColor(mode);
+    }
+
+    // narrow color update method - applies to the Vim status bar items based on color settings
+    this.updateVimStatusBarItemColor(mode);
+  }
+
+  private updateVimStatusBarItemColor(mode: Mode) {
+    const modeName = Mode[mode];
+    const foregroundColor = new vscode.ThemeColor(`statusBarItem.vimMode.${modeName}`);
+    this.statusBarItem.color = foregroundColor;
+    this.recordedStateStatusBarItem.color = foregroundColor;
+  }
+
+  private updateWholeStatusBarColor(mode: Mode) {
     let foreground: string | undefined;
     let background: string | undefined;
 
