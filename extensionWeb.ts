@@ -4,6 +4,7 @@
  * handleKeyEvent().
  */
 import './src/actions/include-main';
+import './src/actions/include-plugins';
 
 /**
  * Load configuration validator
