@@ -16,6 +16,7 @@ import {
   IKeyRemapping,
   IModeSpecificStrings,
   ITargetsConfiguration,
+  IModeSpecificStringsExtended
 } from './iconfiguration';
 
 import { SUPPORT_VIMRC } from 'platform/constants';
@@ -328,6 +329,25 @@ class Configuration implements IConfiguration {
     replace: ['#000000', '#ffffff'],
   };
 
+  statusBarStrings: IModeSpecificStringsExtended<string> = {
+    normal: '-- NORMAL --',
+    insert: '-- INSERT --',
+    visual: '-- VISUAL --',
+    visualblock: '-- VISUAL BLOCK --',
+    visualline: '-- VISUAL LINE --',
+    replace: '-- REPLACE --',
+    easymotion: '-- EASYMOTION --',
+    easymotioninput: '-- EASYMOTION INPUT --',
+    surroundinput: '-- SURROUND INPUT --',
+    disabled: '-- VIM: DISABLED --',
+  };
+
+  debug: IDebugConfiguration = {
+    silent: false,
+    loggingLevelForAlert: 'error',
+    loggingLevelForConsole: 'error',
+  };
+ 
   searchHighlightColor = '';
   searchHighlightTextColor = '';
 

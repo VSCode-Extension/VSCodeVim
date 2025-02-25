@@ -945,6 +945,76 @@
             "#ffffff"
           ]
         },
+        "vim.statusBarStrings.normal": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in Normal mode.",
+          "default": "-- NORMAL --"
+        },
+        "vim.statusBarStrings.insert": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in Insert mode.",
+          "default": "-- INSERT --"
+        },
+        "vim.statusBarStrings.visual": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in Visual mode.",
+          "default": "-- VISUAL --"
+        },
+        "vim.statusBarStrings.visualblock": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in VisualBlock mode.",
+          "default": "-- VISUAL BLOCK --"
+        },
+        "vim.statusBarStrings.visualline": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in VisualLine mode.",
+          "default": "-- VISUAL LINE --"
+        },
+        "vim.statusBarStrings.replace": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in Replace mode.",
+          "default": "-- REPLACE --"
+        },
+        "vim.statusBarStrings.easymotion": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in EasyMotion mode.",
+          "default": "-- EASYMOTION --"
+        },
+        "vim.statusBarStrings.easymotioninput": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in EasyMotionInput mode.",
+          "default": "-- EASYMOTION INPUT --"
+        },
+        "vim.statusBarStrings.surroundinput": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in SurroundInput mode.",
+          "default": "-- SURROUND INPUT --"
+        },
+        "vim.statusBarStrings.disabled": {
+          "type": [
+            "string"
+          ],
+          "description": "The text to show in the status bar in Disabled mode.",
+          "default": "-- VIM: DISABLED --"
+        },
         "vim.visualstar": {
           "type": "boolean",
           "markdownDescription": "In Visual mode, start a search with `*` or `#` using the current selection.",
