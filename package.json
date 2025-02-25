@@ -375,6 +375,11 @@
         "when": "editorTextFocus && vim.active && vim.use<C-space> && !inDebugRepl && vim.mode != 'Insert'"
       },
       {
+        "key": "ctrl+.",
+        "command": "extension.vim_ctrl+.",
+        "when": "editorTextFocus && vim.active && vim.use<C-.> && !inDebugRepl"
+      },
+      {
         "key": "shift+G",
         "command": "list.focusLast",
         "when": "listFocus && !inputFocus"
