@@ -232,7 +232,7 @@
       {
         "key": "ctrl+k",
         "command": "extension.vim_ctrl+k",
-        "when": "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl"
+        "when": "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl && vim.mode == 'Insert'"
       },
       {
         "key": "ctrl+l",
