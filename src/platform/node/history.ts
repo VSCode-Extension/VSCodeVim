@@ -62,6 +62,11 @@ export class HistoryBase {
     }
   }
 
+  // filter history based on predicate
+  public remove(predicate: (value: string) => boolean) {
+    this.history = this.history.filter(predicate);
+  }
+
   public async load(): Promise<void> {
     // await this._base.load();
     let data = '';
