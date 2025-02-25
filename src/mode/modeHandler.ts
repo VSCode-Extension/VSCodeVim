@@ -214,7 +214,11 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
     // must have been inserted.
     const isSnippetSelectionChange = () => {
       return e.selections.every((s) => {
-        return this.vimState.cursors.every((c) => !s.contains(new vscode.Range(c.start, c.stop)));
+        return this.vimState.cursors
+          .filter((c) => !c.start.isEqual(c.stop))
+          .every((c) => {
+            return !s.contains(new vscode.Range(c.start, c.stop));
+          });
       });
     };
 
