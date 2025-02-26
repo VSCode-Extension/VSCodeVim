@@ -732,6 +732,11 @@
           "markdownDescription": "Enable the [Surround](https://github.com/tpope/vim-surround) plugin for Vim.",
           "default": true
         },
+        "vim.enableDefaultPluginMappings": {
+          "type": "boolean",
+          "markdownDescription": "For users of custom keyboard layouts. Disable default keymappings starting with c/d/y. At present only affects surround.",
+          "default": true
+        },
         "vim.argumentObjectSeparators": {
           "type": "array",
           "items": {

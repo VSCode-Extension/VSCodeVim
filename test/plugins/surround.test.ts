@@ -30,6 +30,13 @@ suite('surround plugin', () => {
   });
 
   newTest({
+    title: "'csw' as shortform for ysiw",
+    start: ['first li|ne test'],
+    keysPressed: 'csw(',
+    end: ['first |( line ) test'],
+  });
+
+  newTest({
     title: "'ysw)' surrounds word without space",
     start: ['first |line test'],
     keysPressed: 'ysw)',
