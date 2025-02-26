@@ -113,7 +113,7 @@ const escapedParser = string('\\')
 export const keystrokesExpressionParser: Parser<string[]> = alt(
   escapedParser,
   specialCharacterParser,
-  noneOf('"'),
+  regexp(/./),
 ).many();
 
 export const keystrokesExpressionForMacroParser: Parser<string[]> = alt(
