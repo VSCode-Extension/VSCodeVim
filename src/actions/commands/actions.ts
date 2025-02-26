@@ -1032,7 +1032,7 @@ class CommandOpenFile extends BaseCommand {
       const filePath =
         path.isAbsolute(fileInfo[1]) || !workspaceRootPath
           ? fileInfo[1]
-          : path.join(workspaceRootPath, fileInfo[1]);
+          : path.resolve(path.dirname(vimState.document.uri.fsPath), fileInfo[1]);
       const line = parseInt(fileInfo[2], 10);
       const fileCommand = new FileCommand({
         name: 'edit',
