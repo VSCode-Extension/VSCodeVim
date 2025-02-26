@@ -35,7 +35,7 @@ class EasyMotionTwoCharFindForwardCommand extends EasyMotionCharMoveCommandBase 
   keys = buildTriggerKeys({ key: '2f' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 2, searchOptions: 'min' }));
+    super(new SearchByCharCommand({ charCount: 2, searchDirection: 'forward' }));
   }
 }
 
@@ -44,7 +44,7 @@ class EasyMotionTwoCharFindBackwardCommand extends EasyMotionCharMoveCommandBase
   keys = buildTriggerKeys({ key: '2F' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 2, searchOptions: 'max' }));
+    super(new SearchByCharCommand({ charCount: 2, searchDirection: 'backward' }));
   }
 }
 
@@ -53,7 +53,13 @@ class EasyMotionTwoCharTilCharacterForwardCommand extends EasyMotionCharMoveComm
   keys = buildTriggerKeys({ key: '2t' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 2, searchOptions: 'min', labelPosition: 'before' }));
+    super(
+      new SearchByCharCommand({
+        charCount: 2,
+        searchDirection: 'forward',
+        labelPosition: 'before',
+      }),
+    );
   }
 }
 
@@ -73,7 +79,13 @@ class EasyMotionTwoCharTilBackwardCommand extends EasyMotionCharMoveCommandBase 
   keys = buildTriggerKeys({ key: '2T' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 2, searchOptions: 'max', labelPosition: 'after' }));
+    super(
+      new SearchByCharCommand({
+        charCount: 2,
+        searchDirection: 'backward',
+        labelPosition: 'after',
+      }),
+    );
   }
 }
 
@@ -91,7 +103,7 @@ class EasyMotionFindForwardCommand extends EasyMotionCharMoveCommandBase {
   keys = buildTriggerKeys({ key: 'f' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 1, searchOptions: 'min' }));
+    super(new SearchByCharCommand({ charCount: 1, searchDirection: 'forward' }));
   }
 }
 
@@ -100,7 +112,7 @@ class EasyMotionFindBackwardCommand extends EasyMotionCharMoveCommandBase {
   keys = buildTriggerKeys({ key: 'F' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 1, searchOptions: 'max' }));
+    super(new SearchByCharCommand({ charCount: 1, searchDirection: 'backward' }));
   }
 }
 
@@ -109,7 +121,13 @@ class EasyMotionTilCharacterForwardCommand extends EasyMotionCharMoveCommandBase
   keys = buildTriggerKeys({ key: 't' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 1, searchOptions: 'min', labelPosition: 'before' }));
+    super(
+      new SearchByCharCommand({
+        charCount: 1,
+        searchDirection: 'forward',
+        labelPosition: 'before',
+      }),
+    );
   }
 }
 
@@ -129,7 +147,13 @@ class EasyMotionTilBackwardCommand extends EasyMotionCharMoveCommandBase {
   keys = buildTriggerKeys({ key: 'T' });
 
   constructor() {
-    super(new SearchByCharCommand({ charCount: 1, searchOptions: 'max', labelPosition: 'after' }));
+    super(
+      new SearchByCharCommand({
+        charCount: 1,
+        searchDirection: 'backward',
+        labelPosition: 'after',
+      }),
+    );
   }
 }
 
@@ -140,7 +164,7 @@ class EasyMotionStartOfWordForwardsCommand extends EasyMotionWordMoveCommandBase
   keys = buildTriggerKeys({ key: 'w' });
 
   constructor() {
-    super({ searchOptions: 'min' });
+    super({ searchDirection: 'forward' });
   }
 }
 
@@ -156,7 +180,7 @@ class EasyMotionLineForward extends EasyMotionWordMoveCommandBase {
   keys = buildTriggerKeys({ key: 'l' });
 
   constructor() {
-    super({ jumpToAnywhere: true, searchOptions: 'min', labelPosition: 'after' });
+    super({ jumpToAnywhere: true, searchDirection: 'forward', labelPosition: 'after' });
   }
 }
 
@@ -165,7 +189,7 @@ class EasyMotionLineBackward extends EasyMotionWordMoveCommandBase {
   keys = buildTriggerKeys({ key: 'h' });
 
   constructor() {
-    super({ jumpToAnywhere: true, searchOptions: 'max', labelPosition: 'after' });
+    super({ jumpToAnywhere: true, searchDirection: 'backward', labelPosition: 'after' });
   }
 }
 
@@ -185,7 +209,7 @@ class EasyMotionEndOfWordForwardsCommand extends EasyMotionWordMoveCommandBase {
   keys = buildTriggerKeys({ key: 'e' });
 
   constructor() {
-    super({ searchOptions: 'min', labelPosition: 'after' });
+    super({ searchDirection: 'forward', labelPosition: 'after' });
   }
 }
 
@@ -205,7 +229,7 @@ class EasyMotionBeginningWordCommand extends EasyMotionWordMoveCommandBase {
   keys = buildTriggerKeys({ key: 'b' });
 
   constructor() {
-    super({ searchOptions: 'max' });
+    super({ searchDirection: 'backward' });
   }
 }
 
@@ -214,7 +238,7 @@ class EasyMotionEndBackwardCommand extends EasyMotionWordMoveCommandBase {
   keys = buildTriggerKeys({ key: 'ge' });
 
   constructor() {
-    super({ searchOptions: 'max', labelPosition: 'after' });
+    super({ searchDirection: 'backward', labelPosition: 'after' });
   }
 }
 
@@ -225,7 +249,7 @@ class EasyMotionStartOfLineForwardsCommand extends EasyMotionLineMoveCommandBase
   keys = buildTriggerKeys({ key: 'j' });
 
   constructor() {
-    super({ searchOptions: 'min' });
+    super({ searchDirection: 'forward' });
   }
 }
 
@@ -234,7 +258,7 @@ class EasyMotionStartOfLineBackwordsCommand extends EasyMotionLineMoveCommandBas
   keys = buildTriggerKeys({ key: 'k' });
 
   constructor() {
-    super({ searchOptions: 'max' });
+    super({ searchDirection: 'backward' });
   }
 }
 
@@ -243,4 +267,14 @@ class EasyMotionStartOfLineBackwordsCommand extends EasyMotionLineMoveCommandBas
 @RegisterAction
 class EasyMotionStartOfLineBidirectionalCommand extends EasyMotionLineMoveCommandBase {
   keys = buildTriggerKeys({ key: 'bdjk', leaderCount: 3 });
+}
+
+// easymotion-sl
+@RegisterAction
+class EasyMotionSearchWithinLine extends EasyMotionCharMoveCommandBase {
+  keys = buildTriggerKeys({ key: 'sl', leaderCount: 3 });
+
+  constructor() {
+    super(new SearchByCharCommand({ charCount: 1, searchRange: 'within_line' }));
+  }
 }
