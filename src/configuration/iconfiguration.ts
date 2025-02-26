@@ -194,6 +194,8 @@ export interface IConfiguration {
   easymotionDimBackground: boolean;
   easymotionMarkerFontWeight: string;
   easymotionKeys: string;
+  easymotionJumpToAnywhereRegex: string;
+  easymotionSearchLines: number;
 
   /**
    * Timeout in milliseconds for remapped commands.

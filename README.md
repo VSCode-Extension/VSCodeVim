@@ -546,6 +546,7 @@ Based on [vim-easymotion](https://github.com/easymotion/vim-easymotion) and conf
 | vim.easymotionMarkerFontWeight                   | The font weight used for the marker text.                                                                | String  | 'bold'                                             |
 | vim.easymotionKeys                               | The characters used for jump marker name                                                                 | String  | 'hklyuiopnm,qwertzxcvbasdgjf;'                     |
 | vim.easymotionJumpToAnywhereRegex                | Custom regex to match for JumpToAnywhere motion (analogous to `Easymotion_re_anywhere`)                  | String  | `\b[A-Za-z0-9]\|[A-Za-z0-9]\b\|_.\|#.\|[a-z][A-Z]` |
+| vim.easymotionSearchLines                        | Set the number of lines for the easymotion search.                                                       | Number  | 100                                                |
 
 Once easymotion is active, initiate motions using the following commands. After you initiate the motion, text decorators/markers will be displayed and you can press the keys displayed to jump to that position. `leader` is configurable and is `\` by default.
 
