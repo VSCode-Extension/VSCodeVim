@@ -55,9 +55,10 @@ export class Register {
     vimState: VimState,
     content: RegisterContent,
     multicursorIndex?: number,
-    copyToUnnamed?: boolean,
+    copyToUnnamed?: boolean, // TODO: This should be a part of the options object
+    options: { registerName?: string; registerMode?: RegisterMode; forceOverwrite?: boolean } = {},
   ): void {
-    const register = vimState.recordedState.registerName;
+    const register = options.registerName || vimState.recordedState.registerName;
 
     if (!Register.isValidRegister(register)) {
       throw new Error(`Invalid register ${register}`);
@@ -67,15 +68,31 @@ export class Register {
       return;
     }
 
-    if (Register.isValidUppercaseRegister(register)) {
-      Register.appendToRegister(vimState, register.toLowerCase(), content, multicursorIndex ?? 0);
+    if (Register.isValidUppercaseRegister(register) && !options.forceOverwrite) {
+      Register.appendToRegister(
+        vimState,
+        Register.decapitalize(register),
+        content,
+        multicursorIndex ?? 0,
+        options.registerMode,
+      );
     } else {
-      Register.overwriteRegister(vimState, register, content, multicursorIndex ?? 0);
+      Register.overwriteRegister(
+        vimState,
+        Register.decapitalize(register),
+        content,
+        multicursorIndex ?? 0,
+        options.registerMode,
+      );
     }
 
     if (copyToUnnamed && register !== '"') {
       Register.registers.set('"', Register.registers.get(register)!);
     }
+  }
+
+  private static decapitalize(register: string): string {
+    return Register.isValidUppercaseRegister(register) ? register.toLowerCase() : register;
   }
 
   public static isValidRegister(register: string): boolean {
@@ -95,7 +112,7 @@ export class Register {
     return registerName === '_';
   }
 
-  private static isClipboardRegister(registerName: string): boolean {
+  public static isClipboardRegister(registerName: string): boolean {
     return registerName === '*' || registerName === '+';
   }
 
@@ -120,13 +137,14 @@ export class Register {
     register: string,
     content: RegisterContent,
     multicursorIndex: number,
+    registerMode?: RegisterMode,
   ): void {
     if (multicursorIndex === 0 || !Register.registers.has(register)) {
       Register.registers.set(register, []);
     }
 
     Register.registers.get(register)![multicursorIndex] = {
-      registerMode: vimState.currentRegisterMode,
+      registerMode: registerMode || vimState.currentRegisterMode,
       text: content,
     };
 
@@ -149,6 +167,7 @@ export class Register {
     register: string,
     content: RegisterContent,
     multicursorIndex: number,
+    registerMode?: RegisterMode,
   ): void {
     if (!Register.registers.has(register)) {
       Register.registers.set(register, []);
@@ -162,11 +181,13 @@ export class Register {
         text: content,
       };
     } else {
-      // Line-wise trumps other RegisterModes
-      const registerMode =
-        vimState.currentRegisterMode === RegisterMode.LineWise
-          ? RegisterMode.LineWise
-          : oldContent.registerMode;
+      if (!registerMode) {
+        // Line-wise trumps other RegisterModes
+        registerMode =
+          vimState.currentRegisterMode === RegisterMode.LineWise
+            ? RegisterMode.LineWise
+            : oldContent.registerMode;
+      }
       let newText: RegisterContent;
       if (oldContent.text instanceof RecordedState || content instanceof RecordedState) {
         newText = oldContent.text;
@@ -271,13 +292,7 @@ export class Register {
     register: string,
     multicursorIndex = 0,
   ): Promise<IRegisterContent | undefined> {
-    if (!Register.isValidRegister(register)) {
-      throw new Error(`Invalid register ${register}`);
-    }
-
-    register = register.toLowerCase();
-
-    const contentByCursor = Register.registers.get(register);
+    const contentByCursor = Register.getRegisterArray(register);
 
     if (Register.isClipboardRegister(register)) {
       const clipboardContent = (await Clipboard.Paste()).replace(/\r\n/g, '\n');
@@ -300,6 +315,13 @@ export class Register {
     }
 
     return contentByCursor?.[multicursorIndex];
+  }
+
+  public static getRegisterArray(register: string): IRegisterContent[] | undefined {
+    if (!Register.isValidRegister(register)) {
+      throw new Error(`Invalid register ${register}`);
+    }
+    return Register.registers.get(register.toLowerCase());
   }
 
   public static has(register: string): boolean {

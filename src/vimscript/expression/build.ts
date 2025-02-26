@@ -1,21 +1,22 @@
 import {
-  NumberValue,
-  Expression,
-  ListExpression,
-  UnaryExpression,
-  BinaryOp,
   BinaryExpression,
-  FunctionCallExpression,
-  StringValue,
-  LambdaExpression,
-  VariableExpression,
-  Namespace,
+  BinaryOp,
+  BlobValue,
+  DictionaryValue,
+  Expression,
   FloatValue,
   FuncRefValue,
+  FunctionCallExpression,
+  LambdaExpression,
+  ListExpression,
   ListValue,
-  DictionaryValue,
+  Namespace,
+  NumberValue,
+  RegisterValue,
+  StringValue,
+  UnaryExpression,
   Value,
-  BlobValue,
+  VariableExpression,
 } from './types';
 
 export function int(value: number): NumberValue {
@@ -63,6 +64,17 @@ export function blob(data: ArrayBuffer): BlobValue {
   return {
     type: 'blob',
     data,
+  };
+}
+
+export function register(
+  content: string,
+  registerMode: 'character' | 'line' | 'block',
+): RegisterValue {
+  return {
+    type: 'register_val',
+    content,
+    registerMode,
   };
 }
 

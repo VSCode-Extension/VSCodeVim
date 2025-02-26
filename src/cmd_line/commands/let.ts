@@ -1,6 +1,8 @@
 // eslint-disable-next-line id-denylist
 import { alt, optWhitespace, Parser, seq, string, whitespace } from 'parsimmon';
 import { env } from 'process';
+import { ErrorCode, VimError } from '../../error';
+import { Register, RegisterMode } from '../../register/register';
 import { VimState } from '../../state/vimState';
 import { StatusBar } from '../../statusBar';
 import { ExCommand } from '../../vimscript/exCommand';
@@ -13,7 +15,8 @@ import {
   str,
   subtract,
 } from '../../vimscript/expression/build';
-import { EvaluationContext } from '../../vimscript/expression/evaluate';
+import { displayValue } from '../../vimscript/expression/displayValue';
+import { EvaluationContext, toString } from '../../vimscript/expression/evaluate';
 import {
   envVariableParser,
   expressionParser,
@@ -21,6 +24,7 @@ import {
   registerParser,
   variableParser,
 } from '../../vimscript/expression/parser';
+import { stringToRegisterMode } from '../../vimscript/expression/registerUtils';
 import {
   EnvVariableExpression,
   Expression,
@@ -28,8 +32,6 @@ import {
   RegisterExpression,
   VariableExpression,
 } from '../../vimscript/expression/types';
-import { displayValue } from '../../vimscript/expression/displayValue';
-import { ErrorCode, VimError } from '../../error';
 
 export type LetCommandOperation = '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '.=' | '..=';
 export type LetCommandVariable =
@@ -143,7 +145,23 @@ export class LetCommand extends ExCommand {
         }
         context.setVariable(variable, value, this.args.lock);
       } else if (variable.type === 'register') {
-        // TODO
+        if (this.args.operation !== '=') {
+          throw VimError.fromCode(ErrorCode.InvalidOperationForRegister, this.args.operation);
+        }
+        let registerIndex = 0;
+        const items = value.type === 'list' ? value.items : [value];
+        for (const item of items) {
+          const registerMode =
+            item.type === 'register_val'
+              ? stringToRegisterMode(item.registerMode)
+              : RegisterMode.CharacterWise;
+          Register.put(vimState, toString(value), registerIndex, /* copyToUnamed */ false, {
+            registerName: variable.name,
+            registerMode,
+            forceOverwrite: true,
+          });
+          registerIndex++;
+        }
       } else if (variable.type === 'option') {
         // TODO
       } else if (variable.type === 'env_variable') {

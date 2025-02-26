@@ -81,6 +81,10 @@ export enum ErrorCode {
   UsingABlobAsANumber = 974,
   CannotModifyExistingVariable = 995,
   CannotLockARegister = 996,
+  CannotAccessClipboardRegister = 997,
+  UsingARegisterAsANumber = 998,
+  CannotAccessRecordedStateRegister = 999,
+  InvalidOperationForRegister = 1000,
 }
 
 export const ErrorMessage: IErrorMessage = {
@@ -162,6 +166,10 @@ export const ErrorMessage: IErrorMessage = {
   974: 'Using a Blob as a Number',
   995: 'Cannot modify existing variable',
   996: 'Cannot lock a register',
+  997: 'Cannot access clipboard register',
+  998: 'Using a register as a Number',
+  999: 'Cannot access recorded state register',
+  1000: 'Invalid operation for register',
 };
 
 export class VimError extends Error {

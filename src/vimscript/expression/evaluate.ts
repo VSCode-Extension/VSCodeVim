@@ -1,10 +1,11 @@
 import { all } from 'parsimmon';
-import { displayValue } from './displayValue';
 import { configuration } from '../../configuration/configuration';
 import { ErrorCode, VimError } from '../../error';
 import { globalState } from '../../state/globalState';
-import { bool, float, funcref, listExpr, int, str, list, funcCall, blob } from './build';
+import { blob, bool, float, funcCall, funcref, int, list, listExpr, str } from './build';
+import { displayValue } from './displayValue';
 import { expressionParser, numberParser } from './parser';
+import { lookupRegister } from './registerUtils';
 import {
   BinaryOp,
   ComparisonOp,
@@ -43,6 +44,8 @@ function toInt(value: Value): number {
       throw VimError.fromCode(ErrorCode.UsingAFuncrefAsANumber);
     case 'blob':
       throw VimError.fromCode(ErrorCode.UsingABlobAsANumber);
+    case 'register_val':
+      throw VimError.fromCode(ErrorCode.UsingARegisterAsANumber);
   }
 }
 
@@ -57,6 +60,7 @@ function toFloat(value: Value): number {
     case 'dict_val':
     case 'funcref':
     case 'blob':
+    case 'register_val':
       throw VimError.fromCode(ErrorCode.NumberOrFloatRequired);
   }
 }
@@ -77,6 +81,8 @@ export function toString(value: Value): string {
       throw VimError.fromCode(ErrorCode.UsingFuncrefAsAString);
     case 'blob':
       return displayValue(value);
+    case 'register_val':
+      return value.content;
   }
 }
 
@@ -88,6 +94,7 @@ function toList(value: Value): ListValue {
     case 'funcref':
     case 'dict_val':
     case 'blob':
+    case 'register_val':
       throw VimError.fromCode(ErrorCode.ListRequired);
     case 'list':
       return value;
@@ -102,6 +109,7 @@ function toDict(value: Value): DictionaryValue {
     case 'list':
     case 'funcref':
     case 'blob':
+    case 'register_val':
       throw VimError.fromCode(ErrorCode.DictionaryRequired);
     case 'dict_val':
       return value;
@@ -147,6 +155,7 @@ export class EvaluationContext {
       case 'dict_val':
       case 'funcref':
       case 'blob':
+      case 'register_val':
         return expression;
       case 'list':
         return list(expression.items.map((x) => this.evaluate(x)));
@@ -168,7 +177,7 @@ export class EvaluationContext {
       case 'variable':
         return this.evaluateVariable(expression);
       case 'register':
-        return str(''); // TODO
+        return lookupRegister(expression.name);
       case 'option':
         return str(''); // TODO
       case 'env_variable':
@@ -395,6 +404,9 @@ export class EvaluationContext {
         const bytes = new Uint8Array(sequence.data);
         return int(bytes[toInt(index)]);
       }
+      case 'register_val': {
+        return this.evaluateIndex(str(toString(sequence)), index);
+      }
     }
   }
 
@@ -437,6 +449,9 @@ export class EvaluationContext {
       }
       case 'blob': {
         return blob(new Uint8Array(sequence.data).slice(_start, _end + 1));
+      }
+      case 'register_val': {
+        return this.evaluateSlice(str(toString(sequence)), start, end);
       }
     }
   }
@@ -1281,6 +1296,8 @@ export class EvaluationContext {
           //   return int(7);
           case 'blob':
             return int(8);
+          case 'register_val':
+            return int(9);
           default:
             const guard: never = x;
             throw new Error('type() got unexpected type');

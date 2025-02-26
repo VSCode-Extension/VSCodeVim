@@ -38,6 +38,12 @@ export type BlobValue = {
   data: ArrayBuffer;
 };
 
+export type RegisterValue = {
+  type: 'register_val';
+  content: string;
+  registerMode: 'character' | 'line' | 'block';
+};
+
 export type Value =
   | NumberValue
   | FloatValue
@@ -45,7 +51,8 @@ export type Value =
   | ListValue
   | DictionaryValue
   | FuncRefValue
-  | BlobValue;
+  | BlobValue
+  | RegisterValue;
 
 // -------------------- Expressions --------------------
 
