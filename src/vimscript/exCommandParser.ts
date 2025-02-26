@@ -52,6 +52,7 @@ import { LineRange } from './lineRange';
 import { nameAbbrevParser } from './parserUtils';
 import { LetCommand } from '../cmd_line/commands/let';
 import { CallCommand, EvalCommand } from '../cmd_line/commands/eval';
+import { GrepCommand } from '../cmd_line/commands/grep';
 
 type ArgParser = Parser<ExCommand>;
 
@@ -247,7 +248,7 @@ export const builtinExCommands: ReadonlyArray<[[string, string], ArgParser | und
   [['fu', 'nction'], undefined],
   [['g', 'lobal'], undefined],
   [['go', 'to'], GotoCommand.argParser],
-  [['gr', 'ep'], undefined],
+  [['gr', 'ep'], GrepCommand.argParser],
   [['grepa', 'dd'], undefined],
   [['gu', 'i'], undefined],
   [['gv', 'im'], undefined],
