@@ -42,6 +42,7 @@ export class SearchState {
 
     this.cursorStartPosition = startPosition;
     this.ignoreSmartcase = ignoreSmartcase;
+    this._nextMatchIndex = undefined;
   }
 
   private _searchString: string;
@@ -49,6 +50,11 @@ export class SearchState {
   private offset?: SearchOffset;
 
   public readonly cursorStartPosition: Position;
+  private _nextMatchIndex: number | undefined;
+
+  public get nextMatchIndex(): number | undefined {
+    return this._nextMatchIndex;
+  }
 
   public get searchString(): string {
     return this._searchString;
@@ -136,6 +142,7 @@ export class SearchState {
       return undefined;
     }
     const { range, index } = nextMatch;
+    this._nextMatchIndex = nextMatch.index;
 
     return { pos: this.offset ? this.offset.apply(range) : range.start, index };
   }
