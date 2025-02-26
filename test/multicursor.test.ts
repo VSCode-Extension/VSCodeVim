@@ -161,4 +161,18 @@ suite('Multicursor selections', () => {
     keysPressed: 'gbgb<Esc>Vjjj<Esc><Esc>gg afd',
     end: ['| is a test', '1', '2', 'this is another test', '1', '2', '3', '4', '5'],
   });
+
+  newTest({
+    title: 'Multiple cursors are preserved after inserting before a block selection and then pressing escape once',
+    start: ['|testing', 'testing'],
+    keysPressed: 'gbgbI<Esc>ifoo',
+    end: ['foo|testing', 'footesting'],
+  });
+
+  newTest({
+    title: 'Multiple cursors are truncated to one cursor if you press escape twice',
+    start: ['|testing', 'testing'],
+    keysPressed: 'gbgbI<Esc><Esc>ifoo',
+    end: ['foo|testing', 'testing'],
+  });
 });
