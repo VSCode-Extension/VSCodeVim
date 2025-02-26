@@ -712,6 +712,11 @@
           "markdownDescription": "Whether to use default Vim behavior when using `a` (e.g. `da'`) which include surrounding spaces, or not, as for other text objects.",
           "default": true
         },
+        "vim.indentwise": {
+          "type": "boolean",
+          "markdownDescription": "Enable the [Indentwise](https://github.com/justinmk/vim-sneak) plugin for Vim.",
+          "default": false
+        },
         "vim.sneak": {
           "type": "boolean",
           "markdownDescription": "Enable the [Sneak](https://github.com/justinmk/vim-sneak) plugin for Vim.",
