@@ -1286,9 +1286,9 @@ export class CommandInsertNewLineBefore extends BaseCommand {
 }
 
 @RegisterAction
-class CommandNavigateBack extends BaseCommand {
+class CommandJumpBack extends BaseCommand {
   modes = [Mode.Normal];
-  keys = [['<C-o>'], ['<C-t>']];
+  keys = [['<C-t>']];
 
   override runsOnceForEveryCursor() {
     return false;
@@ -1296,6 +1296,24 @@ class CommandNavigateBack extends BaseCommand {
 
   public override async exec(position: Position, vimState: VimState): Promise<void> {
     await globalState.jumpTracker.jumpBack(position, vimState);
+  }
+}
+
+@RegisterAction
+class CommandNavigateBack extends BaseCommand {
+  modes = [Mode.Normal];
+  keys = [['<C-o>']];
+
+  override isJump = true;
+
+  public override async exec(position: Position, vimState: VimState): Promise<void> {
+    await vscode.commands.executeCommand('workbench.action.navigateBack');
+
+    if (vimState.editor === vscode.window.activeTextEditor) {
+      // We didn't switch to a different editor
+      vimState.cursorStartPosition = vimState.editor.selection.start;
+      vimState.cursorStopPosition = vimState.editor.selection.end;
+    }
   }
 }
 
