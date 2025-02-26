@@ -22,6 +22,8 @@ import { Mode } from '../mode/mode';
 import { ErrorCode, VimError } from '../error';
 import { Logger } from '../util/logger';
 import { earlierOf } from '../common/motion/position';
+import { MarkHistory } from './historyFile';
+import { ExtensionContext } from 'vscode';
 
 const diffEngine = new DiffMatchPatch.diff_match_patch();
 diffEngine.Diff_Timeout = 1; // 1 second
@@ -106,7 +108,7 @@ export interface IMark {
 /**
  * An undo's worth of changes; generally corresponds to a single action.
  */
-class HistoryStep {
+export class HistoryStep {
   /**
    * The insertions and deletions that occured in this history step.
    */
@@ -144,6 +146,27 @@ class HistoryStep {
    * "global" marks which operate across files. (when IMark.name is uppercase)
    */
   static globalMarks: IMark[] = [];
+
+  /**
+   * all the local marks which were restored from the history file
+   */
+  static historyLocalMarks: IMark[] = [];
+
+  public static markHistory: MarkHistory;
+
+  public static async loadHistory(context: ExtensionContext): Promise<void> {
+    HistoryStep.markHistory = new MarkHistory(context);
+    await HistoryStep.markHistory.load();
+    HistoryStep.markHistory.get().forEach((row) => {
+      const newMark: IMark = JSON.parse(row) as IMark;
+      newMark.position = new Position(newMark.position.line, newMark.position.character);
+      if (newMark.isUppercaseMark) {
+        HistoryStep.globalMarks.push(newMark);
+      } else {
+        this.historyLocalMarks.push(newMark);
+      }
+    });
+  }
 
   constructor(init: { marks: IMark[]; changes?: DocumentChange[]; cameFromU?: boolean }) {
     this.changes = init.changes ?? [];
@@ -228,7 +251,11 @@ class UndoStack {
   private currentStepIndex = -1;
 
   // The marks as they existed before the first HistoryStep
-  private initialMarks: IMark[] = [];
+  private initialMarks: IMark[];
+
+  constructor(initialMarks: IMark[]) {
+    this.initialMarks = initialMarks;
+  }
 
   public getHistoryStepAtIndex(idx: number): HistoryStep | undefined {
     return this.historySteps[idx];
@@ -400,7 +427,12 @@ export class HistoryTracker {
 
   constructor(vimState: VimState) {
     this.vimState = vimState;
-    this.undoStack = new UndoStack();
+
+    // get all the local marks which belong to this document and set these as the initial marks
+    const initialMarks = HistoryStep.historyLocalMarks.filter((mark) => {
+      return !mark.isUppercaseMark && mark.document?.uri.path === vimState.document.uri.path;
+    });
+    this.undoStack = new UndoStack(initialMarks);
     this.changeList = new ChangeList();
     this.previousDocumentState = {
       text: this.getDocumentText(),
@@ -571,21 +603,24 @@ export class HistoryTracker {
         isUppercaseMark,
         document: isUppercaseMark ? document : undefined,
       };
-      this.putMarkInList(newMark);
+      this.putMarkInList(newMark, document);
     }
   }
 
   /**
    * Puts the mark into either the global or local marks array depending on mark.isUppercaseMark.
    */
-  private putMarkInList(mark: IMark): void {
+  private putMarkInList(mark: IMark, document: vscode.TextDocument): void {
     const marks = this.getMarkList(mark.isUppercaseMark);
     const previousIndex = marks.findIndex((existingMark) => existingMark.name === mark.name);
     if (previousIndex !== -1) {
       marks[previousIndex] = mark;
+      HistoryStep.markHistory.removeMark(mark, document);
     } else {
       marks.push(mark);
     }
+
+    HistoryStep.markHistory.addMark(mark, document);
   }
 
   /**

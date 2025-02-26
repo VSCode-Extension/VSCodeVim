@@ -17,6 +17,7 @@ import { Logger } from './src/util/logger';
 import { SpecialKeys } from './src/util/specialKeys';
 import { VSCodeContext } from './src/util/vscodeContext';
 import { exCommandParser } from './src/vimscript/exCommandParser';
+import { HistoryStep } from './src/history/historyTracker';
 
 let extensionContext: vscode.ExtensionContext;
 let previousActiveEditorUri: vscode.Uri | undefined;
@@ -108,7 +109,11 @@ export async function activate(context: vscode.ExtensionContext, handleLocal: bo
 
   // Load state
   Register.loadFromDisk(handleLocal);
-  await Promise.all([ExCommandLine.loadHistory(context), SearchCommandLine.loadHistory(context)]);
+  await Promise.all([
+    ExCommandLine.loadHistory(context),
+    SearchCommandLine.loadHistory(context),
+    HistoryStep.loadHistory(context),
+  ]);
 
   if (vscode.window.activeTextEditor) {
     const filepathComponents = vscode.window.activeTextEditor.document.fileName.split(/\\|\//);
