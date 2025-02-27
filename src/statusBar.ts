@@ -149,11 +149,13 @@ class StatusBarImpl implements vscode.Disposable {
       colorCustomizations['statusBar.background'] = background;
       colorCustomizations['statusBar.noFolderBackground'] = background;
       colorCustomizations['statusBar.debuggingBackground'] = background;
+      colorCustomizations['statusBarItem.prominentBackground'] = background;
     }
 
     if (foreground !== undefined) {
       colorCustomizations['statusBar.foreground'] = foreground;
       colorCustomizations['statusBar.debuggingForeground'] = foreground;
+      colorCustomizations['statusBarItem.prominentForeground'] = foreground;
     }
 
     if (currentColorCustomizations !== colorCustomizations) {
