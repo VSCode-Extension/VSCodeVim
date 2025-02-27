@@ -171,25 +171,25 @@ export function statusBarText(vimState: VimState) {
       : '|';
   switch (vimState.modeData.mode) {
     case Mode.Normal:
-      return '-- NORMAL --';
+      return configuration.statusBarStrings.normal;
     case Mode.Insert:
-      return '-- INSERT --';
+      return configuration.statusBarStrings.insert;
     case Mode.Visual:
-      return '-- VISUAL --';
+      return configuration.statusBarStrings.visual;
     case Mode.VisualBlock:
-      return '-- VISUAL BLOCK --';
+      return configuration.statusBarStrings.visualblock;
     case Mode.VisualLine:
-      return '-- VISUAL LINE --';
+      return configuration.statusBarStrings.visualline;
     case Mode.Replace:
-      return '-- REPLACE --';
+      return configuration.statusBarStrings.replace;
     case Mode.EasyMotionMode:
-      return '-- EASYMOTION --';
+      return configuration.statusBarStrings.easymotion;
     case Mode.EasyMotionInputMode:
-      return '-- EASYMOTION INPUT --';
+      return configuration.statusBarStrings.easymotioninput;
     case Mode.SurroundInputMode:
-      return '-- SURROUND INPUT --';
+      return configuration.statusBarStrings.surroundinput;
     case Mode.Disabled:
-      return '-- VIM: DISABLED --';
+      return configuration.statusBarStrings.disabled;
     case Mode.SearchInProgressMode:
       return vimState.modeData.commandLine.display(cursorChar);
     case Mode.CommandlineInProgress:

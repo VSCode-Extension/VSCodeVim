@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 
 export type Digraph = [string, number | number[]];
 
+type AllNonNullable<T> = { [K in keyof T]: NonNullable<T[K]> };
+
 export interface IModeSpecificStrings<T> {
   normal: T | undefined;
   insert: T | undefined;
@@ -9,6 +11,13 @@ export interface IModeSpecificStrings<T> {
   visualline: T | undefined;
   visualblock: T | undefined;
   replace: T | undefined;
+}
+
+export interface IModeSpecificStringsExtended<T> extends AllNonNullable<IModeSpecificStrings<T>> {
+  easymotion: T;
+  easymotioninput: T;
+  surroundinput: T;
+  disabled: T;
 }
 
 export interface IKeyRemapping {
