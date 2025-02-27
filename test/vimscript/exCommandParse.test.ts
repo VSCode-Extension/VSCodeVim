@@ -10,7 +10,7 @@ import { GotoLineCommand } from '../../src/cmd_line/commands/gotoLine';
 import { HistoryCommand, HistoryCommandType } from '../../src/cmd_line/commands/history';
 import { LeftCommand, RightCommand } from '../../src/cmd_line/commands/leftRightCenter';
 import { LetCommand } from '../../src/cmd_line/commands/let';
-import { DeleteMarksCommand, MarksCommand } from '../../src/cmd_line/commands/marks';
+import { DeleteMarksCommand, MarksCommand, MarkCommand } from '../../src/cmd_line/commands/marks';
 import { PutExCommand } from '../../src/cmd_line/commands/put';
 import { QuitCommand } from '../../src/cmd_line/commands/quit';
 import { ReadCommand } from '../../src/cmd_line/commands/read';
@@ -380,6 +380,11 @@ suite('Ex command parsing', () => {
     exParseTest(':marks', new MarksCommand([]));
     exParseTest(':marks aB', new MarksCommand(['a', 'B']));
     exParseTest(':marks 0 1', new MarksCommand(['0', '1']));
+  });
+
+  suite(':mark', () => {
+    exParseTest(':mark a', new MarkCommand('a'));
+    exParseTest(':mark `', new MarkCommand('`'));
   });
 
   suite(':p[rint]', () => {
