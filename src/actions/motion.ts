@@ -1798,12 +1798,12 @@ class MoveToMatchingBracket extends BaseMovement {
       if (pairing) {
         // We found an opening char, now move to the matching closing char
         return (
-          PairMatcher.nextPairedChar(
+          (await PairMatcher.nextPairedChar(
             new Position(position.line, col),
             lineText[col],
             vimState,
             false,
-          ) || failure
+          )) || failure
         );
       }
     }
@@ -1885,7 +1885,7 @@ export abstract class MoveInsideCharacter extends ExpandingSelection {
     const [selStart, selEnd] = sorted(vimState.cursorStartPosition, position);
 
     // First, search backwards for the opening character of the sequence
-    let openPos = PairMatcher.nextPairedChar(selStart, closingChar, vimState, true);
+    let openPos = await PairMatcher.nextPairedChar(selStart, closingChar, vimState, true);
     if (openPos === undefined) {
       // If opening character not found, search forwards
       let lineNum = selStart.line;
@@ -1905,7 +1905,7 @@ export abstract class MoveInsideCharacter extends ExpandingSelection {
     }
 
     // Next, search forwards for the closing character which matches
-    let closePos = PairMatcher.nextPairedChar(openPos, this.charToMatch, vimState, true);
+    let closePos = await PairMatcher.nextPairedChar(openPos, this.charToMatch, vimState, true);
     if (closePos === undefined) {
       return failedMovement(vimState);
     }
@@ -1917,9 +1917,9 @@ export abstract class MoveInsideCharacter extends ExpandingSelection {
       selEnd.getRightThroughLineBreaks(false).isAfterOrEqual(closePos)
     ) {
       // Special case: inner, with all inner content already selected
-      const outerOpenPos = PairMatcher.nextPairedChar(openPos, closingChar, vimState, false);
+      const outerOpenPos = await PairMatcher.nextPairedChar(openPos, closingChar, vimState, false);
       const outerClosePos = outerOpenPos
-        ? PairMatcher.nextPairedChar(outerOpenPos, this.charToMatch, vimState, false)
+        ? await PairMatcher.nextPairedChar(outerOpenPos, this.charToMatch, vimState, false)
         : undefined;
 
       if (outerOpenPos && outerClosePos) {
@@ -2276,7 +2276,7 @@ class MoveToUnclosedRoundBracketBackward extends MoveToMatchingBracket {
     vimState: VimState,
   ): Promise<Position | IMovement> {
     const charToMatch = ')';
-    const result = PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
+    const result = await PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
 
     if (!result) {
       return failedMovement(vimState);
@@ -2294,7 +2294,7 @@ class MoveToUnclosedRoundBracketForward extends MoveToMatchingBracket {
     vimState: VimState,
   ): Promise<Position | IMovement> {
     const charToMatch = '(';
-    const result = PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
+    const result = await PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
 
     if (!result) {
       return failedMovement(vimState);
@@ -2321,7 +2321,7 @@ class MoveToUnclosedCurlyBracketBackward extends MoveToMatchingBracket {
     vimState: VimState,
   ): Promise<Position | IMovement> {
     const charToMatch = '}';
-    const result = PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
+    const result = await PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
 
     if (!result) {
       return failedMovement(vimState);
@@ -2339,7 +2339,7 @@ class MoveToUnclosedCurlyBracketForward extends MoveToMatchingBracket {
     vimState: VimState,
   ): Promise<Position | IMovement> {
     const charToMatch = '{';
-    const result = PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
+    const result = await PairMatcher.nextPairedChar(position, charToMatch, vimState, false);
 
     if (!result) {
       return failedMovement(vimState);

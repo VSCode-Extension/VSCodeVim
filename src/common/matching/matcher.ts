@@ -1,3 +1,5 @@
+import * as vscode from 'vscode';
+
 import { VimState } from '../../state/vimState';
 import { Position } from 'vscode';
 import { configuration } from '../../configuration/configuration';
@@ -135,12 +137,12 @@ export class PairMatcher {
     return undefined;
   }
 
-  static nextPairedChar(
+  static async nextPairedChar(
     position: Position,
     charToMatch: string,
     vimState: VimState,
     allowCurrentPosition: boolean,
-  ): Position | undefined {
+  ): Promise<Position | undefined> {
     /**
      * We do a fairly basic implementation that only tracks the state of the type of
      * character you're over and its pair (e.g. "[" and "]"). This is similar to
@@ -152,6 +154,24 @@ export class PairMatcher {
      * PRs welcomed! (TODO)
      * Though ideally VSC implements https://github.com/Microsoft/vscode/issues/7177
      */
+
+    // VSCode ctrl+shift+p Go to Bracket
+    if (charToMatch === '{' || charToMatch === '}') {
+      // vscode.window.showInformationMessage("try nextpairedchar jumpt to bracket");
+      const editor = vscode.window.activeTextEditor;
+      const oldSelection = editor?.selection;
+      if (oldSelection && oldSelection.isEmpty) {
+        await vscode.commands.executeCommand('editor.action.jumpToBracket');
+
+        // return new cursor position
+        return editor?.selection.active;
+      } else {
+        // If there is a selection, editor.action.jumpToBracket doesn't move and clear the selection
+        // We need to save the selection anchor and active, move the cursor, and re-apply the correct selection.
+        // If we try to do it here, vscode cursor and vim cursor are conflicting
+      }
+    }
+
     const pairing = this.pairings[charToMatch];
 
     if (pairing === undefined || pairing.directionless) {
