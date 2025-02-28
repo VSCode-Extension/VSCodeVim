@@ -114,8 +114,7 @@ Below is an example of a [settings.json](https://code.visualstudio.com/Docs/cust
     "<C-a>": false,
     "<C-f>": false
   },
-
-  "// To improve performance",
+  // To improve performance
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   }
